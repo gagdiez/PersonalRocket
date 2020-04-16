@@ -7,7 +7,7 @@ The main idea of creating this repo is so that the comunity can use it as an exa
 Currently, I have implemented:
 
 ## A basic point and click system.
-You can point something, and see its name under the mouse, and click on it to perform an action. There are currently 4 actions: Look, Walk to, Take, and Read. Though only 2 of them actually do something so far. You can change from one action to the other using the mouse wheel.
+You can point to something, and see its name under the mouse. By clicking you will then perform an action. There are currently 4 actions: *Look*, *Walk to*, *Take*, and *Read*. Though only two of them (walk to, and look) actually do something so far. You can change from one action to the other using the mouse wheel.
 
 ## A 3D Navigation Mesh (Navmesh).
 When "walking to" something, a path will be created using the Navigation system of Godot. Which I was able to understand mostly thanks to [this example](https://github.com/godotengine/godot-demo-projects/tree/master/3d/navmesh)
