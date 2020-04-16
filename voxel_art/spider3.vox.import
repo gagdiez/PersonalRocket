@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/spider3.vox-0683174240b894aa0829ac85e5b1d0c6.mesh"
+
+[deps]
+
+source_file="res://voxel_art/spider3.vox"
+dest_files=[ "res://.import/spider3.vox-0683174240b894aa0829ac85e5b1d0c6.mesh" ]
+
+[params]
+

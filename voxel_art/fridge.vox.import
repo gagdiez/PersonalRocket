@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/fridge.vox-467eae0927d8a30edfa0dd3a4078a519.mesh"
+
+[deps]
+
+source_file="res://voxel_art/fridge.vox"
+dest_files=[ "res://.import/fridge.vox-467eae0927d8a30edfa0dd3a4078a519.mesh" ]
+
+[params]
+

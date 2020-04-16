@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/counter.vox-4f546895b8b4dd9849f78e02b35b1730.mesh"
+
+[deps]
+
+source_file="res://voxel_art/counter.vox"
+dest_files=[ "res://.import/counter.vox-4f546895b8b4dd9849f78e02b35b1730.mesh" ]
+
+[params]
+

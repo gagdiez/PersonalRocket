@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/hanger2.vox-e00fbaa2ba2e9a99c13b4aeb4ce1a1ac.mesh"
+
+[deps]
+
+source_file="res://voxel_art/hanger2.vox"
+dest_files=[ "res://.import/hanger2.vox-e00fbaa2ba2e9a99c13b4aeb4ce1a1ac.mesh" ]
+
+[params]
+

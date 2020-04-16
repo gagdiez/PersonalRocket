@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/pava.vox-d6dce1ea1701422d7e5fef0e0c051bb8.mesh"
+
+[deps]
+
+source_file="res://voxel_art/pava.vox"
+dest_files=[ "res://.import/pava.vox-d6dce1ea1701422d7e5fef0e0c051bb8.mesh" ]
+
+[params]
+

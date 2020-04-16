@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/pan3.vox-0137114b73e0228e92268fe07f776a34.mesh"
+
+[deps]
+
+source_file="res://voxel_art/pan3.vox"
+dest_files=[ "res://.import/pan3.vox-0137114b73e0228e92268fe07f776a34.mesh" ]
+
+[params]
+
