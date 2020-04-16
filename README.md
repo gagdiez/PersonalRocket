@@ -1,6 +1,6 @@
 # Personal Godot
 
-A port of the game [personal voxel](https://lunafromthemoon.itch.io/personal-rocket-demo) to the [Godot Engine](https://godotengine.org/). I will most probably not port the whole main, but just enough so I can learn how to properly use GODOT.
+A port of the game [personal voxel](https://lunafromthemoon.itch.io/personal-rocket-demo) to the [Godot Engine](https://godotengine.org/). I will most probably not port the whole game, but just enough so I can learn how to properly use GODOT.
 
 The main idea of creating this repo is so that the comunity can use it as an example on their own projects. Godot's documentation is currently not the best, and I was able to learn mostly thanks to other projects. So, as a way to say thanks, I am making my project public. I will try to write the code as clear as possible, while keeping good coding practices.
 
