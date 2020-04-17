@@ -10,6 +10,9 @@ onready var label = get_node('Cursor Label')
 var mouse_position
 var obj_under_mouse 
 
+# What we want to avoid when pointing, it is loaded in the ready function
+var avoid
+
 # For showing the label of objects under mouse
 var mouse_offset = Vector2(8, 8)
 
@@ -30,10 +33,12 @@ var current_click_action = WALK
 # For debugging
 var DEBUG = false
 
-
+func _ready():
+	avoid = get_node('House/Walls').get_children()
+	avoid.append($Cole)
+	
 func can_perform_current_action_on(obj):
 	return obj and obj.get(properties_needed[current_click_action])
-
 
 func get_object_under_mouse(mouse_pos):
 	# Function to retrieve which object is under the mouse...
@@ -41,8 +46,6 @@ func get_object_under_mouse(mouse_pos):
 	
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * RAY_LENGTH
-	var avoid = get_node('House/Walls').get_children()
-
 	var selection = world.direct_space_state.intersect_ray(from, to, avoid)
 
 	# If the ray hits something, then selection has a dictionary, with a
@@ -69,12 +72,15 @@ func point():
 	# or maybe display a menu... or something
 	label.rect_position = mouse_position + mouse_offset
 	label.text = action_label[current_click_action] + " "
-
-	if can_perform_current_action_on(obj_under_mouse):
-		label.set("custom_colors/default_color", Color(.1, .9, .1, 1))
-		label.text += str(obj_under_mouse.name)
-	else:
-		label.set("custom_colors/default_color", Color(.9, .1, .1, 1))
+	label.set("custom_colors/default_color", Color(1, 1, 1, 0))
+	
+	if obj_under_mouse:
+		label.text += str(obj_under_mouse.name).to_lower()
+		
+		if can_perform_current_action_on(obj_under_mouse):
+			label.set("custom_colors/default_color", Color(1, 1, 1, 1))
+		else:
+			label.set("custom_colors/default_color", Color(.6, .6, .6, .9))
 
 
 func click():
