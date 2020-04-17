@@ -30,9 +30,10 @@ var current_click_action = WALK
 # For debugging
 var DEBUG = false
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+
+func can_perform_current_action_on(obj):
+	return obj and obj.get(properties_needed[current_click_action])
+
 
 func get_object_under_mouse(mouse_pos):
 	# Function to retrieve which object is under the mouse...
@@ -43,10 +44,10 @@ func get_object_under_mouse(mouse_pos):
 	var avoid = get_node('House/Walls').get_children()
 
 	var selection = world.direct_space_state.intersect_ray(from, to, avoid)
-	
+
 	# If the ray hits something, then selection has a dictionary, with a
 	# bunch of properties refering to the same object:
-	
+
 	#{position: Vector2 # point in world space for collision
 	# normal: Vector2 # normal in world space for collision
 	# collider: Object # Object collided or null (if unassociated)
@@ -60,33 +61,38 @@ func get_object_under_mouse(mouse_pos):
 	else:
 		return
 
+
 func point():
 	# On every single frame we check what's under the mouse
 	# Right now we only show the name of the object (if any)
 	# in the future we could change the cursor (to denote interaction)
 	# or maybe display a menu... or something
-
 	label.rect_position = mouse_position + mouse_offset
 	label.text = action_label[current_click_action] + " "
-	if obj_under_mouse:
+
+	if can_perform_current_action_on(obj_under_mouse):
+		label.set("custom_colors/default_color", Color(.1, .9, .1, 1))
 		label.text += str(obj_under_mouse.name)
+	else:
+		label.set("custom_colors/default_color", Color(.9, .1, .1, 1))
+
 
 func click():
 	# Function called when something was clicked
-	if obj_under_mouse:
-		if obj_under_mouse.get(properties_needed[current_click_action]):
-			# If the object has the properties needed for the
-			# current action, then Cole performs it
-			$Cole.call(current_click_action, obj_under_mouse)
+	if can_perform_current_action_on(obj_under_mouse):
+		# If the object has the properties needed for the
+		# current action, then Cole performs it
+		$Cole.call(current_click_action, obj_under_mouse)
+
 
 func change_action(dir):
 	var idx_current_action = ACTIONS.find(current_click_action)
 	idx_current_action = (idx_current_action + dir) % ACTIONS.size()
 	current_click_action = ACTIONS[idx_current_action]
-	
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
 	mouse_position = viewport.get_mouse_position()
 	obj_under_mouse = get_object_under_mouse(mouse_position)
 	
