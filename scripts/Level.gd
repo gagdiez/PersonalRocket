@@ -24,7 +24,7 @@ const TAKE = 'take'
 
 const ACTIONS = [READ, WALK, LOOK, TAKE]
 const properties_needed = {READ: "written_text", WALK: "position",
-						   LOOK: "description", TAKE: "take_position"}
+						   LOOK: "description", TAKE: "takeable"}
 const action_label = {READ: "Read", WALK: "Walk to",
 					  LOOK: "Look at", TAKE: "Take"}
 
@@ -101,6 +101,9 @@ func change_action(dir):
 func _process(delta):
 	mouse_position = viewport.get_mouse_position()
 	obj_under_mouse = get_object_under_mouse(mouse_position)
+	
+	# Move Cole's bubble to above his head
+	$Cole.talk_bubble.rect_position = camera.unproject_position($Cole.transform.origin) + Vector2(-10, -230)
 	
 	if Input.is_action_just_released("ui_weel_up"):
 		change_action(1)
