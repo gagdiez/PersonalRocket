@@ -3,7 +3,6 @@ extends Spatial
 onready var viewport = get_viewport()
 onready var camera = viewport.get_camera()
 onready var world = get_world()
-onready var navigation = get_node('Navigation')
 onready var label = get_node('Cursor Label')
 
 # This is a point and click game, sounds fair to have all the time
@@ -23,6 +22,8 @@ const TAKE = 'take'
 const ACTIONS = [READ, WALK, LOOK, TAKE]
 const properties_needed = {READ: "written_text", WALK: "position",
 						   LOOK: "description", TAKE: "take_position"}
+const action_label = {READ: "Read", WALK: "Walk to",
+					  LOOK: "Look at", TAKE: "Take"}
 
 var current_click_action = WALK
 
@@ -64,11 +65,11 @@ func point():
 	# Right now we only show the name of the object (if any)
 	# in the future we could change the cursor (to denote interaction)
 	# or maybe display a menu... or something
-	if obj_under_mouse: 
-		label.rect_position = mouse_position + mouse_offset
-		label.text = current_click_action + " " + str(obj_under_mouse.name)
-	else:
-		label.text = ""
+
+	label.rect_position = mouse_position + mouse_offset
+	label.text = action_label[current_click_action] + " "
+	if obj_under_mouse:
+		label.text += str(obj_under_mouse.name)
 
 func click():
 	# Function called when something was clicked
