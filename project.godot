@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="personal_godot"
+config/name="Personal Godot"
 run/main_scene="res://house.tscn"
 config/icon="res://icon.png"
 
@@ -51,5 +51,4 @@ ui_weel_down={
 
 [rendering]
 
-quality/2d/use_pixel_snap=true
 environment/default_environment="res://scripts/default_env.tres"
