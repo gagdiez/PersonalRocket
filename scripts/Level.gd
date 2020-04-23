@@ -3,7 +3,7 @@ extends Spatial
 onready var viewport = get_viewport()
 onready var camera = viewport.get_camera()
 onready var world = get_world()
-onready var label = get_node('Cursor Label')
+onready var label = get_node("GUI/Cursor Label")
 
 # This is a point and click game, sounds fair to have all the time
 # in mind where is mouse, and which object is under it
@@ -101,16 +101,16 @@ func change_action(dir):
 func _process(delta):
 	mouse_position = viewport.get_mouse_position()
 	obj_under_mouse = get_object_under_mouse(mouse_position)
-	
+
 	# Move Cole's bubble to above his head
-	$Cole.talk_bubble.rect_position = camera.unproject_position($Cole.transform.origin) + Vector2(-10, -230)
-	
+	$Cole.talk_bubble.rect_position = camera.unproject_position($Cole.transform.origin + Vector3(-.6, 9.5, 0))
+
 	if Input.is_action_just_released("ui_weel_up"):
 		change_action(1)
-	
+
 	if Input.is_action_just_released("ui_weel_down"):
 		change_action(-1)
-	
+
 	point()
 
 	if Input.is_action_just_released("ui_click"):

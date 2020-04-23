@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="GUI" type="Node2D"]
+
+[node name="Cursor Label" type="RichTextLabel" parent="."]
+margin_left = 467.0
+margin_top = 259.0
+margin_right = 757.0
+margin_bottom = 283.0
+text = "cursor"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
