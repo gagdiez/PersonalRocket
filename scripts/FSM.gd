@@ -75,6 +75,7 @@ class Take extends State:
 		who = _who
 		
 	func run():
+		blocked = true
 		who.inventory.append(object_to_take)
 		
 		who.say("I took the " + str(object_to_take.name).to_lower())

@@ -10,6 +10,5 @@ onready var takeable = false
 onready var collision = $CollisionShape
 
 func take():
-	print("I am " + self.name.to_lower() + " and somebody took me")
 	visible = false
 	collision.disabled = true
