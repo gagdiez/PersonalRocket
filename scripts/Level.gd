@@ -37,6 +37,8 @@ func _ready():
 	avoid = get_node('House/Walls').get_children()
 	avoid.append($Cole)
 	
+	$Cole.inventory = $GUI/Inventory
+	
 func can_perform_current_action_on(obj):
 	return obj and obj.get(properties_needed[current_click_action])
 

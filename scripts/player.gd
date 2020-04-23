@@ -16,7 +16,7 @@ onready var queue = FSM.Queue.new()
 # Player variables
 const SPEED = 5
 const MINIMUM_DISTANCE = 0.5
-var inventory = []
+var inventory
 
 
 func _ready():
