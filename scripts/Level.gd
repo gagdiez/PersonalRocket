@@ -8,7 +8,8 @@ onready var label = get_node("GUI/Cursor Label")
 # This is a point and click game, sounds fair to have all the time
 # in mind where is mouse, and which object is under it
 var mouse_position
-var obj_under_mouse 
+var obj_under_mouse
+var current_inventory
 
 # What we want to avoid when pointing, it is loaded in the ready function
 var avoid
@@ -36,15 +37,25 @@ var DEBUG = false
 func _ready():
 	avoid = get_node('House/Walls').get_children()
 	avoid.append($Cole)
-	
+
 	$Cole.inventory = $GUI/Inventory
+	
+	current_inventory = $Cole.inventory
+	
+	# Testing
+	$Cole.inventory.add($House/Interactive/Cup)
+	$Cole.inventory.add($House/Interactive/Pan)
+	$Cole.inventory.add($House/Interactive/Cup)
+	$Cole.inventory.add($House/Interactive/Pan)
+	$Cole.inventory.add($House/Interactive/Cup)
+	$Cole.inventory.add($House/Interactive/Pan)
 	
 func can_perform_current_action_on(obj):
 	return obj and obj.get(properties_needed[current_click_action])
 
 func get_object_under_mouse(mouse_pos):
 	# Function to retrieve which object is under the mouse...
-	var RAY_LENGTH = 100
+	var RAY_LENGTH = 50
 	
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * RAY_LENGTH
@@ -60,7 +71,6 @@ func get_object_under_mouse(mouse_pos):
 	# rid: RID # RID it collided against
 	# shape: int # shape index of collider
 	# metadata: Variant()} # metadata of collider
-	
 	if not selection.empty():
 		return selection['collider']
 	else:
@@ -101,11 +111,15 @@ func change_action(dir):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	mouse_position = viewport.get_mouse_position()
-	obj_under_mouse = get_object_under_mouse(mouse_position)
-
 	# Move Cole's bubble to above his head
 	$Cole.talk_bubble.rect_position = camera.unproject_position($Cole.transform.origin + Vector3(-.6, 9.5, 0))
+	
+	mouse_position = viewport.get_mouse_position()
+	
+	if current_inventory.position_contained(mouse_position):
+		obj_under_mouse = current_inventory.get_object_in_position(mouse_position)
+	else:
+		obj_under_mouse = get_object_under_mouse(mouse_position)
 
 	if Input.is_action_just_released("ui_weel_up"):
 		change_action(1)
