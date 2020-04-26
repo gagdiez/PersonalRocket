@@ -1,35 +1,28 @@
 extends Spatial
 
+onready var actions = load("res://scripts/actions.gd").new()
 onready var viewport = get_viewport()
 onready var camera = viewport.get_camera()
 onready var world = get_world()
 onready var label = get_node("GUI/Cursor Label")
 
 # This is a point and click game, sounds fair to have all the time
-# in mind where is mouse, and which object is under it
+# in mind where is mouse, which object is under it, which action is currently
+# selected, and  who's inventory is on screen (for multiplayer)
 var mouse_position
 var obj_under_mouse
 var current_inventory
+var current_click_action
+
+# The actions available in the level
+var ACTIONS
+var f
 
 # What we want to avoid when pointing, it is loaded in the ready function
 var avoid
 
 # For showing the label of objects under mouse
 var mouse_offset = Vector2(8, 8)
-
-# There should be a couple of actions: walk_to, read, look_at, take
-const READ = 'read'
-const WALK = 'walk_to'
-const LOOK = 'look'
-const TAKE = 'take'
-
-const ACTIONS = [READ, WALK, LOOK, TAKE]
-const properties_needed = {READ: "written_text", WALK: "position",
-						   LOOK: "description", TAKE: "takeable"}
-const action_label = {READ: "Read", WALK: "Walk to",
-					  LOOK: "Look at", TAKE: "Take"}
-
-var current_click_action = WALK
 
 # For debugging
 var DEBUG = false
@@ -38,20 +31,21 @@ func _ready():
 	avoid = get_node('House/Walls').get_children()
 	avoid.append($Cole)
 
+	ACTIONS = [actions.read, actions.walk, actions.examine,
+			   actions.take, actions.use]
+
+	current_click_action = actions.walk
+
 	$Cole.inventory = $GUI/Inventory
 	
 	current_inventory = $Cole.inventory
 	
 	# Testing
 	$Cole.inventory.add($House/Interactive/Cup)
-	$Cole.inventory.add($House/Interactive/Pan)
-	$Cole.inventory.add($House/Interactive/Cup)
-	$Cole.inventory.add($House/Interactive/Pan)
-	$Cole.inventory.add($House/Interactive/Cup)
-	$Cole.inventory.add($House/Interactive/Pan)
+
 	
 func can_perform_current_action_on(obj):
-	return obj and obj.get(properties_needed[current_click_action])
+	return obj and obj.get(current_click_action.property)
 
 func get_object_under_mouse(mouse_pos):
 	# Function to retrieve which object is under the mouse...
@@ -83,7 +77,7 @@ func point():
 	# in the future we could change the cursor (to denote interaction)
 	# or maybe display a menu... or something
 	label.rect_position = mouse_position + mouse_offset
-	label.text = action_label[current_click_action] + " "
+	label.text = current_click_action.text + " "
 	label.set("custom_colors/default_color", Color(1, 1, 1, 0))
 	
 	if obj_under_mouse:
@@ -100,7 +94,7 @@ func click():
 	if can_perform_current_action_on(obj_under_mouse):
 		# If the object has the properties needed for the
 		# current action, then Cole performs it
-		$Cole.call(current_click_action, obj_under_mouse)
+		$Cole.call(current_click_action.name, obj_under_mouse)
 
 
 func change_action(dir):

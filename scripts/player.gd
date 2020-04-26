@@ -5,6 +5,7 @@ var DEBUG = false
 
 # Get nodes from the scene
 onready var FSM = load("res://scripts/FSM.gd")
+onready var actions = load("res://scripts/actions.gd").new()
 onready var navigation = $Navigation
 onready var talk_bubble = $"Talk Bubble"
 onready var talk_bubble_timer = get_node("Talk Bubble/Timer")
@@ -56,8 +57,12 @@ func face_object(object):
 		$Sprite.scale.x = 1
 
 
-func look(object):
-	say(object.description)
+func read(object):
+	say(object.get(actions.read.property))
+
+
+func examine(object):
+	say(object.get(actions.examine.property))
 
 
 func quiet():
