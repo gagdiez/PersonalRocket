@@ -11,12 +11,12 @@ onready var label = get_node("GUI/Cursor Label")
 # selected, and  who's inventory is on screen (for multiplayer)
 var mouse_position
 var obj_under_mouse
+var current_player
 var current_inventory
 var current_click_action
 
 # The actions available in the level
 var ACTIONS
-var f
 
 # What we want to avoid when pointing, it is loaded in the ready function
 var avoid
@@ -35,13 +35,14 @@ func _ready():
 			   actions.take, actions.use]
 
 	current_click_action = actions.walk
-
-	$Cole.inventory = $GUI/Inventory
 	
-	current_inventory = $Cole.inventory
+	current_player = $Cole
+	current_player.inventory = $GUI/Inventory
+	
+	current_inventory = current_player.inventory
 	
 	# Testing
-	$Cole.inventory.add($House/Interactive/Cup)
+	current_player.inventory.add($House/Interactive/Cup)
 
 	
 func can_perform_current_action_on(obj):
@@ -93,8 +94,10 @@ func click():
 	# Function called when something was clicked
 	if can_perform_current_action_on(obj_under_mouse):
 		# If the object has the properties needed for the
-		# current action, then Cole performs it
-		$Cole.call(current_click_action.name, obj_under_mouse)
+		# current action, then Cole performs it. So far we use
+		# tha names of the actions as functions, but in the future we could
+		# have a dictionary name -> player function
+		current_player.call(current_click_action.name, obj_under_mouse)
 
 
 func change_action(dir):
@@ -106,7 +109,7 @@ func change_action(dir):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# Move Cole's bubble to above his head
-	$Cole.talk_bubble.rect_position = camera.unproject_position($Cole.transform.origin + Vector3(-.6, 9.5, 0))
+	current_player.talk_bubble.rect_position = camera.unproject_position(current_player.transform.origin + Vector3(-.6, 9.5, 0))
 	
 	mouse_position = viewport.get_mouse_position()
 	
