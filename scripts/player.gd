@@ -11,7 +11,6 @@ onready var talk_bubble = $"Talk Bubble"
 onready var talk_bubble_timer = get_node("Talk Bubble/Timer")
 
 # Lets model our character as a set of actions. This will simplify the logic
-# a lot. In this way, if the character is 
 onready var queue = FSM.Queue.new()
 
 # Player variables
@@ -30,7 +29,6 @@ func animate(action, direction):
 			$Sprite.scale.x = -1
 		else:
 			$Sprite.scale.x = 1
-
 	$Animations.play(action)
 
 
@@ -74,6 +72,11 @@ func say(text):
 	talk_bubble.text = text
 	talk_bubble.visible = true
 	talk_bubble_timer.start()
+
+
+func use(what, where):
+	say("I don't know how to use the " + what.name.to_lower() +
+		" with the " + where.name.to_lower())
 
 
 func _physics_process(delta):

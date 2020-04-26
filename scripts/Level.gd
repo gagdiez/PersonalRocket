@@ -17,6 +17,8 @@ var current_click_action
 
 # The actions available in the level
 var ACTIONS
+var actions_to_functions = {} # So far we translated actions to functions using
+							  # action.name, but this could change in the future
 
 # What we want to avoid when pointing, it is loaded in the ready function
 var avoid
@@ -26,6 +28,7 @@ var mouse_offset = Vector2(8, 8)
 
 # For debugging
 var DEBUG = false
+
 
 func _ready():
 	avoid = get_node('House/Walls').get_children()
@@ -40,13 +43,13 @@ func _ready():
 	current_player.inventory = $GUI/Inventory
 	
 	current_inventory = current_player.inventory
-	
-	# Testing
-	current_player.inventory.add($House/Interactive/Cup)
 
-	
+
 func can_perform_current_action_on(obj):
-	return obj and obj.get(current_click_action.property)
+	var obj_and_combined = obj and current_click_action.type == actions.COMBINED
+	var obj_and_possible = obj and obj.get(current_click_action.property)
+	return obj_and_combined or obj_and_possible
+
 
 func get_object_under_mouse(mouse_pos):
 	# Function to retrieve which object is under the mouse...
@@ -56,16 +59,7 @@ func get_object_under_mouse(mouse_pos):
 	var to = from + camera.project_ray_normal(mouse_pos) * RAY_LENGTH
 	var selection = world.direct_space_state.intersect_ray(from, to, avoid)
 
-	# If the ray hits something, then selection has a dictionary, with a
-	# bunch of properties refering to the same object:
-
-	#{position: Vector2 # point in world space for collision
-	# normal: Vector2 # normal in world space for collision
-	# collider: Object # Object collided or null (if unassociated)
-	# collider_id: ObjectID # Object it collided against
-	# rid: RID # RID it collided against
-	# shape: int # shape index of collider
-	# metadata: Variant()} # metadata of collider
+	# If the ray hits something, the hitted object is at selection['collider']
 	if not selection.empty():
 		return selection['collider']
 	else:
@@ -74,33 +68,37 @@ func get_object_under_mouse(mouse_pos):
 
 func point():
 	# On every single frame we check what's under the mouse
-	# Right now we only show the name of the object (if any)
-	# in the future we could change the cursor (to denote interaction)
-	# or maybe display a menu... or something
 	label.rect_position = mouse_position + mouse_offset
 	label.text = current_click_action.text + " "
-	label.set("custom_colors/default_color", Color(1, 1, 1, 0))
+	label.set("custom_colors/default_color", Color(.6, .6, .6, .9))
 	
-	if obj_under_mouse:
-		label.text += str(obj_under_mouse.name).to_lower()
-		
-		if can_perform_current_action_on(obj_under_mouse):
+	if can_perform_current_action_on(obj_under_mouse):
+			label.text += str(obj_under_mouse.name).to_lower() + " "
 			label.set("custom_colors/default_color", Color(1, 1, 1, 1))
-		else:
-			label.set("custom_colors/default_color", Color(.6, .6, .6, .9))
 
 
 func click():
-	# Function called when something was clicked
+	# Function called when a click is made
 	if can_perform_current_action_on(obj_under_mouse):
-		# If the object has the properties needed for the
-		# current action, then Cole performs it. So far we use
-		# tha names of the actions as functions, but in the future we could
-		# have a dictionary name -> player function
-		current_player.call(current_click_action.name, obj_under_mouse)
+		match current_click_action.type:
+			actions.IMMEDIATE:
+				# Immediate action in an object that has the needed properties
+				current_player.call(current_click_action.name, obj_under_mouse)
+			actions.TO_COMBINE:
+				# Combine action with this object
+				current_click_action.combine(obj_under_mouse)
+			actions.COMBINED:
+				# Action that carries an object
+				current_player.call(current_click_action.name,
+									current_click_action.object,
+									obj_under_mouse)
+				current_click_action.uncombine()
+	else:
+		current_click_action.uncombine()
 
 
 func change_action(dir):
+	current_click_action.uncombine()
 	var idx_current_action = ACTIONS.find(current_click_action)
 	idx_current_action = (idx_current_action + dir) % ACTIONS.size()
 	current_click_action = ACTIONS[idx_current_action]

@@ -6,9 +6,11 @@ onready var SLOT_SIZE = $Slots.get_constant("hseparation") + ITEM_SIZE
 class Item extends TextureRect:
 	var object
 	var usable = true
+	var description
 	
 	func _init(_object):
 		object = _object
+		description = _object.description
 		self.name = _object.name
 		self.texture = load(_object.thumbnail)
 		self.rect_size.x = ITEM_SIZE
