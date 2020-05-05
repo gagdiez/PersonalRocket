@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/light_bulb.vox-e5dd60edfd1caac955bb9908266ac747.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/light_bulb.vox"
+dest_files=[ "res://.import/light_bulb.vox-e5dd60edfd1caac955bb9908266ac747.mesh" ]
+
+[params]
+

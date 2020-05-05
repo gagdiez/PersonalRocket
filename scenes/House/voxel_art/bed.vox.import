@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/bed.vox-f63c3d474f4ac704043728b27e4be1f6.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/bed.vox"
+dest_files=[ "res://.import/bed.vox-f63c3d474f4ac704043728b27e4be1f6.mesh" ]
+
+[params]
+

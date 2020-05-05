@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/paper_roll.vox-ad05793dfec79cab89c6a676414334e7.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/paper_roll.vox"
+dest_files=[ "res://.import/paper_roll.vox-ad05793dfec79cab89c6a676414334e7.mesh" ]
+
+[params]
+

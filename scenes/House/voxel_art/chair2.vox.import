@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/chair2.vox-3391c5726c9874a51e0a8a1300d59a70.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/chair2.vox"
+dest_files=[ "res://.import/chair2.vox-3391c5726c9874a51e0a8a1300d59a70.mesh" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/cable.vox-97912cc6a997a67ea2d48b77d22468b2.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/cable.vox"
+dest_files=[ "res://.import/cable.vox-97912cc6a997a67ea2d48b77d22468b2.mesh" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/cactus.vox-82f99b9b075d9e1ba2c139d64052f5fa.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/cactus.vox"
+dest_files=[ "res://.import/cactus.vox-82f99b9b075d9e1ba2c139d64052f5fa.mesh" ]
+
+[params]
+

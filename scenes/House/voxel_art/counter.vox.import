@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/counter.vox-894805e35af1fdf0153862089eefdcfb.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/counter.vox"
+dest_files=[ "res://.import/counter.vox-894805e35af1fdf0153862089eefdcfb.mesh" ]
+
+[params]
+

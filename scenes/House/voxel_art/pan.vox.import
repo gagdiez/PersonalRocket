@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/pan.vox-58493f0164ce9edc7b0d8a9052139f1e.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/pan.vox"
+dest_files=[ "res://.import/pan.vox-58493f0164ce9edc7b0d8a9052139f1e.mesh" ]
+
+[params]
+

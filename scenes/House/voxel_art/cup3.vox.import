@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/cup3.vox-92632f08941b4bff2bde2d1ce4e30060.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/cup3.vox"
+dest_files=[ "res://.import/cup3.vox-92632f08941b4bff2bde2d1ce4e30060.mesh" ]
+
+[params]
+

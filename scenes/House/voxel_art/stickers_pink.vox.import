@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/stickers_pink.vox-1f7cd60b096cf64b0848defa1b0dcc5c.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/stickers_pink.vox"
+dest_files=[ "res://.import/stickers_pink.vox-1f7cd60b096cf64b0848defa1b0dcc5c.mesh" ]
+
+[params]
+

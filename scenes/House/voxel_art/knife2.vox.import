@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/knife2.vox-32bd690671310224ceaac8f01b043a51.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/knife2.vox"
+dest_files=[ "res://.import/knife2.vox-32bd690671310224ceaac8f01b043a51.mesh" ]
+
+[params]
+

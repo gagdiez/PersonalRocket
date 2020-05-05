@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/Point_and_Click/scripts/inventory.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Point_and_Click/scripts/Point_and_Click.gd" type="Script" id=2]
+
+[node name="Point and Click" type="Node"]
+script = ExtResource( 2 )
+
+[node name="GUI" type="Node2D" parent="."]
+
+[node name="Cursor Label" type="RichTextLabel" parent="GUI"]
+margin_left = 467.0
+margin_top = 259.0
+margin_right = 757.0
+margin_bottom = 283.0
+text = "cursor"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" type="Panel" parent="GUI"]
+show_behind_parent = true
+margin_right = 1024.0
+margin_bottom = 54.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slots" type="GridContainer" parent="GUI/Inventory"]
+margin_left = 5.0
+margin_top = 3.0
+margin_right = 1025.0
+margin_bottom = 51.0
+custom_constants/hseparation = 5
+columns = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/bottle.vox-c237fedb504a85df6b74e7ca1345715c.mesh"
+
+[deps]
+
+source_file="res://scenes/House/voxel_art/bottle.vox"
+dest_files=[ "res://.import/bottle.vox-c237fedb504a85df6b74e7ca1345715c.mesh" ]
+
+[params]
+
