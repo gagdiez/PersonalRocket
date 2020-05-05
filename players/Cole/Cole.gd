@@ -9,6 +9,7 @@ onready var FSM = load("res://scenes/Point_and_Click/scripts/FSM.gd").new()
 onready var actions = load("res://scenes/Point_and_Click/scripts/actions.gd").new()
 onready var talk_bubble = $"Talk Bubble"
 onready var talk_bubble_timer = get_node("Talk Bubble/Timer")
+onready var animation_player = $Animations
 
 # Lets model our character as a set of actions. This will simplify the logic
 onready var queue = FSM.Queue.new()
@@ -24,32 +25,32 @@ func _ready():
 
 
 func animate(action, direction):
-	if direction:
-		if direction.x < 0:
-			$Sprite.scale.x = -1
-		else:
-			$Sprite.scale.x = 1
 	$Animations.play(action)
 
 
 func walk_to(object):
-	# Add to the queue that we want to walk
-	queue.clear()
-	queue.append(FSM.Walk.new(self, object, navigation))
+	var end = navigation.get_closest_point(object.position)
+	
+	if (end - transform.origin).length() > MINIMUM_DISTANCE:
+		# If it's not next to me, walk to it
+		queue.clear()
+		queue.append(FSM.Animate.new(self, "walk"))
+		queue.append(FSM.WalkTowards.new(self, object))
+		queue.append(FSM.Animate.new(self, "idle"))
 
 
 func take(object):
 	# First of all, walk to the object
 	queue.clear()
-	queue.append(FSM.Walk.new(self, object, navigation))
+	walk_to(object)
 	queue.append(FSM.FaceObject.new(self, object))
-	queue.append(FSM.PlayAnimation.new(self, $Animations, 'take_raise'))
+	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
 	queue.append(FSM.Take.new(self, object))
-	queue.append(FSM.PlayAnimation.new(self, $Animations, 'take_down'))
+	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
 
 
-func face_object(object):
-	if object.transform.origin.x < transform.origin.x:
+func face_direction(direction):
+	if direction.x < 0:
 		$Sprite.scale.x = -1
 	else:
 		$Sprite.scale.x = 1

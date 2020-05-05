@@ -30,20 +30,21 @@ class Queue:
 		if queue and not queue[0].blocked:
 			queue = []
 
-class Walk extends State:
+class WalkTowards extends State:
 	# Function to walk
 	var path = []
 	var path_idx = 0
 	var who
 	 
-	func _init(_who, to_what, navigation):
-		var begin = navigation.get_closest_point(_who.transform.origin)
-		var end = navigation.get_closest_point(to_what.position)
+	func _init(_who, to_what):
 		who = _who
 		
-		if (end - _who.transform.origin).length() > who.MINIMUM_DISTANCE:
+		var begin = who.navigation.get_closest_point(who.transform.origin)
+		var end = who.navigation.get_closest_point(to_what.position)
+		
+		if (end - who.transform.origin).length() > who.MINIMUM_DISTANCE:
 			# We actually need to walk
-			path = navigation.get_simple_path(begin, end, true)
+			path = who.navigation.get_simple_path(begin, end, true)
 			path_idx = 0
 
 	func run():
@@ -57,11 +58,10 @@ class Walk extends State:
 				run()
 			else:
 				# Move the character
-				who.animate("walk", move_vec)
 				who.move_and_slide(move_vec.normalized() * who.SPEED)
+				who.face_direction(move_vec)
 		else:
 			# There is no more path to walk, go to idle animation
-			who.animate("idle", null)
 			finished = true
 
 
@@ -86,15 +86,15 @@ class Take extends State:
 		finished = true
 
 
-class PlayAnimation extends State:
+class AnimateUntilFinished extends State:
 	var who
 	var animation
 	var player
 	
-	func _init(_who, animation_player, _animation):
+	func _init(_who, _animation):
 		who = _who
 		animation = _animation
-		player = animation_player
+		player = who.animation_player
 	
 	func run():
 		if not finished:
@@ -107,6 +107,21 @@ class PlayAnimation extends State:
 		finished = true
 		player.disconnect("animation_finished", self, "finished")
 
+
+class Animate extends State:
+	var who
+	var animation
+	var player
+	
+	func _init(_who, _animation):
+		who = _who
+		animation = _animation
+	
+	func run():
+		who.animate(animation, null)
+		finished = true
+
+
 class FaceObject extends State:
 	var who
 	var object
@@ -116,5 +131,6 @@ class FaceObject extends State:
 		object = _object
 	
 	func run():
-		who.face_object(object)
+		var direction = object.transform.origin - who.transform.origin
+		who.face_direction(direction)
 		finished = true
