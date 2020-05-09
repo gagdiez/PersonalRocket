@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/furniture.vox-cb8d4ed35d3b3cec5bdcd75faa2b5c28.mesh"
+
+[deps]
+
+source_file="res://scenes/House/room_left/furniture.vox"
+dest_files=[ "res://.import/furniture.vox-cb8d4ed35d3b3cec5bdcd75faa2b5c28.mesh" ]
+
+[params]
+

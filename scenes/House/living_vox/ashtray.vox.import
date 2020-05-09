@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/ashtray.vox-0ea6ccf92c2f1a98ba3e95bc3939bdd1.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/ashtray.vox"
+dest_files=[ "res://.import/ashtray.vox-0ea6ccf92c2f1a98ba3e95bc3939bdd1.mesh" ]
+
+[params]
+

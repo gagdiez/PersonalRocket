@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/box2.vox-d22dc53c9baede8cb585d75b81bdaacc.mesh"
+
+[deps]
+
+source_file="res://scenes/House/room_left/box2.vox"
+dest_files=[ "res://.import/box2.vox-d22dc53c9baede8cb585d75b81bdaacc.mesh" ]
+
+[params]
+

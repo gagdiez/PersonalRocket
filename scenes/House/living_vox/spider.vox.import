@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/spider.vox-ecf974d0a2457225c7d92ef7d210efd9.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/spider.vox"
+dest_files=[ "res://.import/spider.vox-ecf974d0a2457225c7d92ef7d210efd9.mesh" ]
+
+[params]
+

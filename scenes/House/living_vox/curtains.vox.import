@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/curtains.vox-7c046b30d43b14b8ed86a79086c08ffa.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/curtains.vox"
+dest_files=[ "res://.import/curtains.vox-7c046b30d43b14b8ed86a79086c08ffa.mesh" ]
+
+[params]
+

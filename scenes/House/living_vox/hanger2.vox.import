@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/hanger2.vox-ec20e667b4c63e07c94bf9a3686445a4.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/hanger2.vox"
+dest_files=[ "res://.import/hanger2.vox-ec20e667b4c63e07c94bf9a3686445a4.mesh" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/lamp.vox-2cdfc23511620c1adafa8fc9ad0cf464.mesh"
+
+[deps]
+
+source_file="res://scenes/House/room_left/lamp.vox"
+dest_files=[ "res://.import/lamp.vox-2cdfc23511620c1adafa8fc9ad0cf464.mesh" ]
+
+[params]
+

@@ -7,7 +7,6 @@ func _ready():
 
 	$Cole.navigation = $"House/Navigation"
 
-	var avoid = get_node('House/Walls').get_children()
-	avoid.append($Cole)
+	var avoid = [$Cole]
 	
 	point_and_click.init(world, viewport, avoid, [$Cole])

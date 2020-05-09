@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/estante.vox-f02105c0ed58f67e3741dddef98e6e4c.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/estante.vox"
+dest_files=[ "res://.import/estante.vox-f02105c0ed58f67e3741dddef98e6e4c.mesh" ]
+
+[params]
+

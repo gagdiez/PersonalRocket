@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/mr_roboto.vox-bb92ca42a097876a2025211054978d2a.mesh"
+
+[deps]
+
+source_file="res://scenes/House/room_left/mr_roboto.vox"
+dest_files=[ "res://.import/mr_roboto.vox-bb92ca42a097876a2025211054978d2a.mesh" ]
+
+[params]
+

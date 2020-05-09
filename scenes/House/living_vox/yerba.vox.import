@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/yerba.vox-3c0a7646be32171afe076b7b51ac8102.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/yerba.vox"
+dest_files=[ "res://.import/yerba.vox-3c0a7646be32171afe076b7b51ac8102.mesh" ]
+
+[params]
+

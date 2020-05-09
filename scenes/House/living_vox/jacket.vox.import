@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/jacket.vox-e21ad3a847a91a077aecc385a5c4f597.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/jacket.vox"
+dest_files=[ "res://.import/jacket.vox-e21ad3a847a91a077aecc385a5c4f597.mesh" ]
+
+[params]
+

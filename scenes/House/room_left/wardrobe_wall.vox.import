@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/wardrobe_wall.vox-d96e9c1981b84dcb9eed3ebb543a3594.mesh"
+
+[deps]
+
+source_file="res://scenes/House/room_left/wardrobe_wall.vox"
+dest_files=[ "res://.import/wardrobe_wall.vox-d96e9c1981b84dcb9eed3ebb543a3594.mesh" ]
+
+[params]
+

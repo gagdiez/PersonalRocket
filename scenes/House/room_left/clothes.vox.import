@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/clothes.vox-522e95eb2f0fb4104414caf33ec735d8.mesh"
+
+[deps]
+
+source_file="res://scenes/House/room_left/clothes.vox"
+dest_files=[ "res://.import/clothes.vox-522e95eb2f0fb4104414caf33ec735d8.mesh" ]
+
+[params]
+

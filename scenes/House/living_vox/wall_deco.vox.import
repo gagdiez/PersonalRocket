@@ -1,0 +1,13 @@
+[remap]
+
+importer="MagicaVoxel-Importer"
+type="Mesh"
+path="res://.import/wall_deco.vox-69fda91ce937460c2471432df8aabfe2.mesh"
+
+[deps]
+
+source_file="res://scenes/House/living_vox/wall_deco.vox"
+dest_files=[ "res://.import/wall_deco.vox-69fda91ce937460c2471432df8aabfe2.mesh" ]
+
+[params]
+
