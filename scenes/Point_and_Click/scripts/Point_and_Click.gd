@@ -44,11 +44,12 @@ func init(_world, _viewport, _avoid, _players):
 	label = get_node("GUI/Cursor Label")
 
 	ACTIONS = [actions.read, actions.walk, actions.examine,
-			   actions.take, actions.use]
+			   actions.take, actions.use, actions.open]
 
 	current_click_action = actions.walk
 	
 	current_player.inventory = $GUI/Inventory
+	current_player.camera = camera
 	
 	current_inventory = current_player.inventory
 

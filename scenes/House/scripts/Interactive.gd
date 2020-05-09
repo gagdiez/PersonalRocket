@@ -5,6 +5,7 @@ extends Spatial
 onready var written_text
 onready var position = self.transform.origin
 onready var description = "It is just a " + name.to_lower()
+onready var openable = false
 onready var takeable = false
 onready var thumbnail = 'thumbnails/default.png'
 

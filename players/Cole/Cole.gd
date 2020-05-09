@@ -3,6 +3,7 @@ extends KinematicBody
 # For debugging
 var DEBUG = false
 var navigation
+var camera
 
 # Get nodes from the scene
 onready var FSM = load("res://scenes/Point_and_Click/scripts/FSM.gd").new()
@@ -49,8 +50,21 @@ func take(object):
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
 
 
+func open(object):
+	# First of all, walk to the object
+	queue.clear()
+	walk_to(object)
+	queue.append(FSM.FaceObject.new(self, object))
+	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
+	queue.append(FSM.Open.new(self, object))
+	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
+
+
 func face_direction(direction):
-	if direction.x < 0:
+	var my_pos = camera.unproject_position(transform.origin)
+	var dir = camera.unproject_position(transform.origin + direction)
+	
+	if dir.x < my_pos.x:
 		$Sprite.scale.x = -1
 	else:
 		$Sprite.scale.x = 1
@@ -61,6 +75,8 @@ func read(object):
 
 
 func examine(object):
+	var direction = object.position - self.transform.origin
+	face_direction(direction)
 	say(object.get(actions.examine.property))
 
 

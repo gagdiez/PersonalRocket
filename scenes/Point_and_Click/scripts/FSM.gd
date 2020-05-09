@@ -86,6 +86,24 @@ class Take extends State:
 		finished = true
 
 
+class Open extends State:
+	# Function to take
+	var object_to_take
+	var who
+	
+	func _init(_who, _object_to_take):
+		object_to_take = _object_to_take
+		who = _who
+		
+	func run():
+		blocked = true
+
+		# Tell the object you opened it
+		object_to_take.open()
+		
+		finished = true
+
+
 class AnimateUntilFinished extends State:
 	var who
 	var animation
