@@ -30,22 +30,16 @@ class Queue:
 		if queue and not queue[0].blocked:
 			queue = []
 
-class WalkTowards extends State:
+
+class WalkPath extends State:
 	# Function to walk
 	var path = []
 	var path_idx = 0
 	var who
 	 
-	func _init(_who, to_what):
+	func _init(_who, _path):
 		who = _who
-		
-		var begin = who.navigation.get_closest_point(who.transform.origin)
-		var end = who.navigation.get_closest_point(to_what.position)
-		
-		if (end - who.transform.origin).length() > who.MINIMUM_DISTANCE:
-			# We actually need to walk
-			path = who.navigation.get_simple_path(begin, end, true)
-			path_idx = 0
+		path = _path
 
 	func run():
 		if path_idx < path.size():
@@ -61,7 +55,7 @@ class WalkTowards extends State:
 				who.move_and_slide(move_vec.normalized() * who.SPEED)
 				who.face_direction(move_vec)
 		else:
-			# There is no more path to walk, go to idle animation
+			# There is no more path to walk
 			finished = true
 
 

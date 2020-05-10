@@ -30,13 +30,19 @@ func animate(action, direction):
 
 
 func walk_to(object):
+	
 	var end = navigation.get_closest_point(object.position)
+	print("Gotta go to", end)
 	
 	if (end - transform.origin).length() > MINIMUM_DISTANCE:
-		# If it's not next to me, walk to it
+		# We actually need to walk
+		var begin = navigation.get_closest_point(transform.origin)
+		
+		var path = navigation.get_simple_path(begin, end, true)
+
 		queue.clear()
 		queue.append(FSM.Animate.new(self, "walk"))
-		queue.append(FSM.WalkTowards.new(self, object))
+		queue.append(FSM.WalkPath.new(self, path))
 		queue.append(FSM.Animate.new(self, "idle"))
 
 
