@@ -1,4 +1,4 @@
 extends 'Interactive.gd'
 
-func _ready():
-	description = "That's my best friend, Mister Roboto"
+func examine():
+	return "That is my best friend, Mister Roboto"

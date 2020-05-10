@@ -29,10 +29,9 @@ func animate(action, direction):
 	$Animations.play(action)
 
 
-func walk_to(object):
-	
-	var end = navigation.get_closest_point(object.position)
-	
+func walk_to(position):
+	var end = navigation.get_closest_point(position)
+
 	if (end - transform.origin).length() > MINIMUM_DISTANCE:
 		# We actually need to walk
 		var begin = navigation.get_closest_point(transform.origin)
@@ -43,13 +42,17 @@ func walk_to(object):
 		queue.append(FSM.Animate.new(self, "walk"))
 		queue.append(FSM.WalkPath.new(self, path))
 		queue.append(FSM.Animate.new(self, "idle"))
-		queue.append(FSM.NotifyArrived.new(object))
+
+
+func go_to(object):
+	walk_to(object.position)
+	queue.append(FSM.NotifyArrived.new(object))
 
 
 func take(object):
+	return
 	# First of all, walk to the object
-	queue.clear()
-	walk_to(object)
+	walk_to(object.position)
 	queue.append(FSM.FaceObject.new(self, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
 	queue.append(FSM.Take.new(self, object))
@@ -58,8 +61,7 @@ func take(object):
 
 func open(object):
 	# First of all, walk to the object
-	queue.clear()
-	walk_to(object)
+	walk_to(object.position)
 	queue.append(FSM.FaceObject.new(self, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
 	queue.append(FSM.Open.new(self, object))
@@ -77,13 +79,13 @@ func face_direction(direction):
 
 
 func read(object):
-	say(object.get(actions.read.property))
+	say(object.read())
 
 
 func examine(object):
 	var direction = object.position - self.transform.origin
 	face_direction(direction)
-	say(object.get(actions.examine.property))
+	say(object.examine())
 
 
 func quiet():
@@ -97,12 +99,22 @@ func say(text):
 	talk_bubble_timer.start()
 
 
-func use(what, where):
+func use(object):
+	walk_to(object.position)
+	queue.append(FSM.FaceObject.new(self, object))
+	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
+	queue.append(FSM.Use.new(self, object))
+	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
+
+func use_item(what, where):
 	say("I don't know how to use the " + what.name.to_lower() +
 		" with the " + where.name.to_lower())
-
-
 func _physics_process(delta):
+	# Move Cole's bubble to above his head
+	talk_bubble.rect_position = camera.unproject_position(
+		transform.origin + Vector3(-.6, 9.5, 0)
+	)
+	
 	var current_action = queue.current()
 
 	if current_action:

@@ -1,38 +1,35 @@
-# The actions have grown enough in quantity and complexity such that
-# they need their own class
+# Base class for actions
 
 # Each action will have:
-#  - a "name" which identifies it
+#  - a "function" called when executing
 #  - a "text" which can be shown in screen
-#  - a "property" which the object should have in order to execute the action
 #  - a "type" which should be either "immediate" or "combined"
 #    - immediate actions shuold be executed immediatly (i.e. examine <object>)
 #    - combined actions need two objects to be done (i.e. use <this> <on that>)
 #  - a "object" if the action is "combined", this is the object to combine"
+#  - a "nexus" for the text in "combined" actions (i.e. use <this> "with" <that>)
 
 const IMMEDIATE = 'immediate'
 const TO_COMBINE = 'to_combine'
 const COMBINED = 'combined'
 
 class Action:
-	var name
+	var function
 	var text
 	var orig_text
 	var type
 	var orig_type
-	var property
 	var object
 	var nexus = ""
 	
 	
-	func _init(_name: String, _text:String, _type: String,
-			   _property: String, _nexus: String = ""):
-		name = _name
+	func _init(_func: String, _text:String, _type: String,
+			   _nexus: String = ""):
+		function = _func
 		text = _text
 		orig_text = _text
 		orig_type = _type
 		type = _type
-		property = _property
 		nexus = _nexus
 	
 	func combine(obj):
@@ -46,9 +43,13 @@ class Action:
 		type = orig_type
 
 
-var take = Action.new("take", "Take", IMMEDIATE, 'takeable')
-var walk = Action.new("walk_to", "Walk to", IMMEDIATE, 'position')
-var read = Action.new("read", "Read", IMMEDIATE, 'readable')
-var examine = Action.new("examine", "Examine", IMMEDIATE, 'description')
-var use = Action.new("use", "Use", TO_COMBINE, 'usable', 'with')
-var open = Action.new("open", "Open", IMMEDIATE, 'openable')
+var walk_to = Action.new("walk_to", " ", IMMEDIATE)
+var take = Action.new("take", "Take", IMMEDIATE)
+var go_to = Action.new("go_to", "Go to", IMMEDIATE)
+var read = Action.new("read", "Read", IMMEDIATE)
+var examine = Action.new("examine", "Examine", IMMEDIATE)
+var search = Action.new("search", "Search", IMMEDIATE)
+var use = Action.new("use", "Use", IMMEDIATE)
+var open = Action.new("open", "Open", IMMEDIATE)
+
+var use_item = Action.new("use", "Use", TO_COMBINE, 'with')
