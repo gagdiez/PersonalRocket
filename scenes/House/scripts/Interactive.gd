@@ -14,3 +14,6 @@ onready var collision = $CollisionShape
 func take():
 	visible = false
 	collision.disabled = true
+
+func arrived():
+	pass

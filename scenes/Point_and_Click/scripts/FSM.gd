@@ -80,6 +80,18 @@ class Take extends State:
 		finished = true
 
 
+class NotifyArrived extends State:
+	# Function to take
+	var whom
+	
+	func _init(_whom):
+		whom = _whom
+		
+	func run():
+		whom.arrived()
+		finished = true
+
+
 class Open extends State:
 	# Function to take
 	var object_to_take

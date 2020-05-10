@@ -115,6 +115,11 @@ func change_action(dir):
 	current_click_action = ACTIONS[idx_current_action]
 
 
+func change_to_camera(_camera):
+	_camera.current = true
+	camera = viewport.get_camera()
+	current_player.camera = camera
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# Move Cole's bubble to above his head

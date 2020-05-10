@@ -1,4 +1,4 @@
-extends KinematicBody
+extends Spatial
 
 # For debugging
 var DEBUG = false
@@ -32,7 +32,6 @@ func animate(action, direction):
 func walk_to(object):
 	
 	var end = navigation.get_closest_point(object.position)
-	print("Gotta go to", end)
 	
 	if (end - transform.origin).length() > MINIMUM_DISTANCE:
 		# We actually need to walk
@@ -44,6 +43,7 @@ func walk_to(object):
 		queue.append(FSM.Animate.new(self, "walk"))
 		queue.append(FSM.WalkPath.new(self, path))
 		queue.append(FSM.Animate.new(self, "idle"))
+		queue.append(FSM.NotifyArrived.new(object))
 
 
 func take(object):
