@@ -1,5 +1,5 @@
 extends 'Interactive.gd'
 
 func _ready():
-	main_action = ACTION.take
+	actions = [ACTIONS.take, ACTIONS.examine]
 	thumbnail = 'thumbnails/cup.png'

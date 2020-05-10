@@ -52,4 +52,7 @@ var search = Action.new("search", "Search", IMMEDIATE)
 var use = Action.new("use", "Use", IMMEDIATE)
 var open = Action.new("open", "Open", IMMEDIATE)
 
-var use_item = Action.new("use", "Use", TO_COMBINE, 'with')
+var use_item = Action.new("use_item", "Use", TO_COMBINE, 'with')
+
+# The empty action
+var none = Action.new("", "", IMMEDIATE)

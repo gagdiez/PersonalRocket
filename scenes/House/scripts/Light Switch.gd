@@ -1,7 +1,7 @@
 extends 'Interactive.gd'
 
 func _ready():
-	main_action = ACTION.use
+	actions = [ACTIONS.use]
 
 func use():
 	$OmniLight.visible = not $OmniLight.visible
