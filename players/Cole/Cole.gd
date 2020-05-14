@@ -28,8 +28,8 @@ func animate(animation):
 	$Animations.play(animation)
 
 
-func walk_to(position):
-	var end = navigation.get_closest_point(position)
+func walk_to(object):
+	var end = navigation.get_closest_point(object.position)
 
 	if (end - transform.origin).length() > MINIMUM_DISTANCE:
 		# We actually need to walk
@@ -45,13 +45,13 @@ func walk_to(position):
 
 func go_to(object):
 	# Transition between areas, walk to the point we need, and inform the obj
-	walk_to(object.position)
+	walk_to(object)
 	queue.append(FSM.PerformActionOnObject.new(ACTIONS.go_to, object))
 
 
 func get_close_and_perform_action(action, object):
 	# First of all, walk to the object
-	walk_to(object.position)
+	walk_to(object)
 	queue.append(FSM.FaceObject.new(self, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
 	queue.append(FSM.PerformActionOnObject.new(action, object))
@@ -67,7 +67,7 @@ func use(object):
 
 
 func take(object):
-	walk_to(object.position)
+	walk_to(object)
 	queue.append(FSM.FaceObject.new(self, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
 	queue.append(FSM.PerformActionOnObject.new(ACTIONS.take, object))
