@@ -75,6 +75,7 @@ func point():
 	else:
 		if current_action.type != ACTIONS.COMBINED:
 			current_action = ACTIONS.none
+			idx_current_action = 0
 
 
 func click():
@@ -94,8 +95,7 @@ func click():
 				current_action.uncombine()
 	else:
 		current_action.uncombine()
-
-	idx_current_action = 0
+		idx_current_action = 0
 
 
 func change_action(dir):
