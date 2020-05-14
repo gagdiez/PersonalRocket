@@ -54,7 +54,7 @@ func get_object_under_mouse(mouse_pos):
 	var selection = world.direct_space_state.intersect_ray(from, to, avoid)
 
 	# If the ray hits something, the hitted object is at selection['collider']
-	if not selection.empty() and selection['collider'].get("actions"):
+	if not selection.empty():
 		return selection['collider']
 	else:
 		return
@@ -71,7 +71,7 @@ func point():
 			current_action = actions[idx_current_action % actions.size()]
 			label.text =  current_action.text
 
-		label.text += " " + str(obj_under_mouse.name).to_lower()
+		label.text += " " + obj_under_mouse.oname
 	else:
 		if current_action.type != ACTIONS.COMBINED:
 			current_action = ACTIONS.none

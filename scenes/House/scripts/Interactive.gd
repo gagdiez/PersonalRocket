@@ -1,5 +1,5 @@
 # Base class for interactive objects
-extends Spatial
+extends StaticBody
 
 # All actions
 onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/actions.gd").new()
@@ -13,8 +13,11 @@ onready var position = self.transform.origin
 # Thumbnail for takeable items
 onready var thumbnail = 'thumbnails/default.png'
 
-# Other
-onready var description = "A good old " + name
+# Name to output
+onready var oname = str(name).to_lower()
+
+# Description of the object
+onready var description = "A good old " + oname
 
 onready var collision = $CollisionShape
 

@@ -34,7 +34,7 @@ class Action:
 	
 	func combine(obj):
 		object = obj
-		text = orig_text + " " + obj.name.to_lower() + " " + nexus
+		text = orig_text + " " + obj.oname + " " + nexus
 		type = COMBINED
 	
 	func uncombine():

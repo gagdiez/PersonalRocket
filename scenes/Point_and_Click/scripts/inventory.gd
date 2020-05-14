@@ -8,6 +8,7 @@ class Item extends TextureRect:
 	var usable = true
 	var description
 	var actions
+	var oname
 	
 	var ACTIONS = load("res://scenes/Point_and_Click/scripts/actions.gd").new()
 	
@@ -15,8 +16,8 @@ class Item extends TextureRect:
 		object = _object
 		description = _object.description
 		actions = [ACTIONS.use_item, ACTIONS.examine]
-			
-		self.name = _object.name
+		oname = _object.oname
+		
 		self.texture = load(_object.thumbnail)
 		self.rect_size.x = ITEM_SIZE
 		self.rect_size.y = ITEM_SIZE

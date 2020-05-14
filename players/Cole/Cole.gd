@@ -110,8 +110,8 @@ func say(text):
 
 
 func use_item(what, where):
-	say("I don't know how to use the " + what.name.to_lower() +
-		" with the " + where.name.to_lower())
+	say("I don't know how to use the " + what.oname +
+		" with the " + where.oname)
 
 
 func _physics_process(delta):
