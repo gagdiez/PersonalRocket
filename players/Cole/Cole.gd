@@ -19,6 +19,7 @@ var inventory
 var talking = false
 var talk_bubble
 var talk_bubble_timer
+var talk_bubble_offset = Vector3(-.6, 9.5, 0)
 
 func _ready():
 	talk_bubble = $"Talk Bubble"
@@ -117,10 +118,10 @@ func use_item(what, where):
 		" with the " + where.oname)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Move Cole's bubble to above his head
 	talk_bubble.rect_position = camera.unproject_position(
-			transform.origin + Vector3(-.6, 9.5, 0)
+			transform.origin + talk_bubble_offset
 	)
 	
 	var current_action = queue.current()

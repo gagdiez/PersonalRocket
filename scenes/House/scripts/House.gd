@@ -38,5 +38,10 @@ func transition(who, to):
 	who.camera = to_camera
 	who.rotation_degrees.y = to_camera.rotation_degrees.y
 	
+	if to_camera.rotation_degrees.y != 0:
+		who.talk_bubble_offset = Vector3(0, 9.5, -.9)
+	else:
+		who.talk_bubble_offset = Vector3(-.7, 9.5, 0)
+	
 	
 	
