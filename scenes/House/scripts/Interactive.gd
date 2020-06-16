@@ -22,9 +22,9 @@ onready var description = "A good old " + oname
 onready var collision = $CollisionShape
 
 # The take function will always make the things desapear, so lets leave it here
-func take():
+func take(who):
 	visible = false
 	collision.disabled = true
 
-func examine():
+func examine(who):
 	return description

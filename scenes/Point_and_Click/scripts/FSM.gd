@@ -102,10 +102,12 @@ class FaceObject extends State:
 
 class PerformActionOnObject extends State:
 	# Function to take
+	var who
 	var object
 	var action
 	
-	func _init(act, obj):
+	func _init(_who, act, obj):
+		who = _who
 		object = obj
 		action = act
 		
@@ -113,7 +115,7 @@ class PerformActionOnObject extends State:
 		blocked = true
 		
 		# Perform action on object
-		object.call(action.function)
+		object.call(action.function, who)
 	
 		finished = true
 

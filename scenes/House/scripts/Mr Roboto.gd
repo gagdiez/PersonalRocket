@@ -3,5 +3,5 @@ extends 'Interactive.gd'
 func _ready():
 	oname = "Mr Roboto"
 	
-func examine():
+func examine(who):
 	return "That is my best friend, Mister Roboto"

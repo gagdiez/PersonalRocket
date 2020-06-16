@@ -7,8 +7,6 @@ var camera
 # Get nodes from the scene
 onready var FSM = load("res://scenes/Point_and_Click/scripts/FSM.gd").new()
 onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/actions.gd").new()
-onready var talk_bubble = $"Talk Bubble"
-onready var talk_bubble_timer = get_node("Talk Bubble/Timer")
 onready var animation_player = $Animations
 
 # Lets model our character as a set of queue of actions
@@ -18,10 +16,15 @@ onready var queue = FSM.Queue.new()
 const SPEED = 5
 const MINIMUM_DISTANCE = 0.5
 var inventory
-
+var talking = false
+var talk_bubble
+var talk_bubble_timer
 
 func _ready():
+	talk_bubble = $"Talk Bubble"
+	talk_bubble_timer = get_node("Talk Bubble/Timer")
 	talk_bubble_timer.connect("timeout", self, "quiet")
+	talk_bubble.visible = true
 
 
 func animate(animation):
@@ -46,7 +49,7 @@ func walk_to(object):
 func go_to(object):
 	# Transition between areas, walk to the point we need, and inform the obj
 	walk_to(object)
-	queue.append(FSM.PerformActionOnObject.new(ACTIONS.go_to, object))
+	queue.append(FSM.PerformActionOnObject.new(self, ACTIONS.go_to, object))
 
 
 func get_close_and_perform_action(action, object):
@@ -54,7 +57,7 @@ func get_close_and_perform_action(action, object):
 	walk_to(object)
 	queue.append(FSM.FaceObject.new(self, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
-	queue.append(FSM.PerformActionOnObject.new(action, object))
+	queue.append(FSM.PerformActionOnObject.new(self, action, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
 
 
@@ -70,7 +73,7 @@ func take(object):
 	walk_to(object)
 	queue.append(FSM.FaceObject.new(self, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
-	queue.append(FSM.PerformActionOnObject.new(ACTIONS.take, object))
+	queue.append(FSM.PerformActionOnObject.new(self, ACTIONS.take, object))
 	queue.append(FSM.AddToInventory.new(self, object))
 	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
 
@@ -89,7 +92,7 @@ func face_object_and_do(action, object):
 	if object.get("position"):
 		var direction = object.position - self.transform.origin
 		face_direction(direction)
-	say(object.call(action.function))
+	say(object.call(action.function, self))
 
 
 func examine(object):
@@ -107,7 +110,7 @@ func say(text):
 	talk_bubble.text = text
 	talk_bubble.visible = true
 	talk_bubble_timer.start()
-
+	
 
 func use_item(what, where):
 	say("I don't know how to use the " + what.oname +
@@ -117,7 +120,7 @@ func use_item(what, where):
 func _physics_process(delta):
 	# Move Cole's bubble to above his head
 	talk_bubble.rect_position = camera.unproject_position(
-		transform.origin + Vector3(-.6, 9.5, 0)
+			transform.origin + Vector3(-.6, 9.5, 0)
 	)
 	
 	var current_action = queue.current()

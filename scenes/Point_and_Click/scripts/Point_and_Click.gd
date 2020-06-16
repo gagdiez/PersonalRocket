@@ -10,14 +10,12 @@ var label
 var mouse_position
 var obj_under_mouse
 
-# What we want to avoid when pointing, it is loaded in the ready function
-var avoid
-
 # Other variables related to the point and click
 var world
-var camera
-var players
 var viewport
+var camera
+var avoid
+var players
 var ACTIONS
 var idx_current_action = 0
 
@@ -39,9 +37,7 @@ func init(_world, _viewport, _avoid, _players):
 	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
 	
 	current_action = ACTIONS.none
-	
 	current_player.inventory = $GUI/Inventory
-	current_player.camera = camera
 	current_inventory = current_player.inventory
 
 
@@ -104,15 +100,11 @@ func change_action(dir):
 	idx_current_action += dir
 
 
-func change_to_camera(_camera):
-	# Switch to _camera
-	_camera.current = true
-	camera = viewport.get_camera()
-	current_player.camera = camera
-
 
 func _process(_delta):
 	# Get mouse position
+	viewport = get_viewport()
+	camera = viewport.get_camera()
 	mouse_position = viewport.get_mouse_position()
 	
 	# Check if there is an object under the mouse

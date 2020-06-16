@@ -4,7 +4,7 @@ func _ready():
 	actions = [ACTIONS.walk_to]
 	oname = ""
 
-func walk_to():
+func walk_to(who):
 	return
 
 func _input_event(camera, event, click_position, click_normal, shape_idx):

@@ -1,44 +1,42 @@
 extends Spatial
 
 var point_and_click
+var all_interactive_objects
 
 func _ready():
-	var viewport = get_viewport()
-	var world = get_world()
 	point_and_click = $"Point and Click"
 
-	$Cole.navigation = $"House/Navigation"
-
-	var avoid = [$Cole]
+	$Cole.navigation = $House/Navigation
+	$Cole.camera = $House/Living/Camera
 	
-	for transitions in $Transitions.get_children():
-		transitions.level = self
-		
-	point_and_click.init(world, viewport, avoid, [$Cole])
-	transition_to("Living")
+	point_and_click.init(get_world(), get_viewport(), [$Cole], [$Cole])
+	
+	all_interactive_objects = $"House/Room Left/Interactive".get_children()
+	all_interactive_objects += $"House/Living/Interactive".get_children()
+
+	transition($Cole, $House/Living)
 
 
-func transition_to(place):
-	var camera
+func transition(who, to):
+	# the objects from where we come are not interactive anymore
 	var avoid = []
 	
-	match place:
-		"Living":
-			avoid = get_node("House/Room Left/Interactive").get_children()
-			camera = get_node("House/Living/Camera")
-			point_and_click.current_player.rotation_degrees.y = 0
-			
-			$"Transitions/Living Room/CollisionShape".disabled = true
-			$"Transitions/Room/CollisionShape".disabled = false
-			
-		"Room Left":
-			avoid = get_node("House/Living/Interactive").get_children()
-			camera = get_node("House/Room Left/Camera")
-			point_and_click.current_player.rotation_degrees.y = -90
-			
-			$"Transitions/Living Room/CollisionShape".disabled = false
-			$"Transitions/Room/CollisionShape".disabled = true
+	var to_objects = to.get_node("Interactive").get_children()
 	
-	avoid.append(point_and_click.current_player)
+	for obj in all_interactive_objects:
+		if not obj in to_objects:
+			avoid.append(obj)
+	
+	print(avoid)
+	
+	var to_camera = to.get_node("Camera")
+	to_camera.current = true
+	
+	point_and_click.camera = to_camera
 	point_and_click.avoid = avoid
-	point_and_click.change_to_camera(camera)
+	
+	who.camera = to_camera
+	who.rotation_degrees.y = to_camera.rotation_degrees.y
+	
+	
+	

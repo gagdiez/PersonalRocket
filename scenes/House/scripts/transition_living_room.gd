@@ -1,10 +1,7 @@
-extends "Interactive.gd"
-
-var level
+extends "Transition.gd"
 
 func _ready():
 	position = Vector3(-4.157, 0 , -14.09)
-	actions = [ACTIONS.go_to]
-
-func go_to():
-	level.transition_to("Living")
+	
+	level = get_node("../../../..")
+	to = get_node("../../../Living")
