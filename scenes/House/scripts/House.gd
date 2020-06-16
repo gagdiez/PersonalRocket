@@ -27,8 +27,6 @@ func transition(who, to):
 		if not obj in to_objects:
 			avoid.append(obj)
 	
-	print(avoid)
-	
 	var to_camera = to.get_node("Camera")
 	to_camera.current = true
 	

@@ -100,7 +100,6 @@ func change_action(dir):
 	idx_current_action += dir
 
 
-
 func _process(_delta):
 	# Get mouse position
 	viewport = get_viewport()

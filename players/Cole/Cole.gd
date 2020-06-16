@@ -25,7 +25,7 @@ func _ready():
 	talk_bubble = $"Talk Bubble"
 	talk_bubble_timer = get_node("Talk Bubble/Timer")
 	talk_bubble_timer.connect("timeout", self, "quiet")
-	talk_bubble.visible = true
+	talk_bubble.visible = false
 
 
 func animate(animation):
