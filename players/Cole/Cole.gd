@@ -11,6 +11,7 @@ var talk_bubble_offset = Vector3(-.6, 9.5, 0)
 var animation_player
 
 func _ready():
+	._ready()
 	animation_player = $Animations
 
 	talk_bubble = $"Talk Bubble"
@@ -117,3 +118,7 @@ func say(text):
 func use_item(what, where):
 	say("I don't know how to use the " + what.oname +
 		" with the " + where.oname)
+
+func talk_to(who):
+	queue.append(STATES.FaceObject.new(self, who))
+	queue.append(STATES.Say.new(self, "Oh, hi " + who.name))

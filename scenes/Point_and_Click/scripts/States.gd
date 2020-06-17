@@ -90,6 +90,20 @@ class PerformActionOnObject extends State:
 		finished = true
 
 
+class Say extends State:
+	var who
+	var what
+	
+	func _init(_who, _what):
+		who = _who
+		what = _what
+		
+	func run():
+		blocked = true
+		who.say(what)
+		finished = true
+
+
 class WalkPath extends State:
 	# Function to walk
 	var path = []
