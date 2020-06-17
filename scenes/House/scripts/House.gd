@@ -4,15 +4,15 @@ var point_and_click
 var all_interactive_objects
 
 func _ready():
-	point_and_click = $"Point and Click"
-
 	$Cole.navigation = $House/Navigation
 	$Cole.camera = $House/Living/Camera
-	
-	point_and_click.init(get_world(), get_viewport(), [$Cole], [$Cole])
-	
+
 	all_interactive_objects = $"House/Room Left/Interactive".get_children()
 	all_interactive_objects += $"House/Living/Interactive".get_children()
+
+	point_and_click = $"Point and Click"	
+	point_and_click.init(get_world(), get_viewport(), all_interactive_objects,
+						 [$Cole])
 
 	transition($Cole, $House/Living)
 
@@ -40,6 +40,3 @@ func transition(who, to):
 		who.talk_bubble_offset = Vector3(0, 9.5, -.9)
 	else:
 		who.talk_bubble_offset = Vector3(-.7, 9.5, 0)
-	
-	
-	

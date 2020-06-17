@@ -1,33 +1,34 @@
-extends Spatial
-
-# The player knows where the camera is, and where they can walk
-var navigation
-var camera
-
-# Get nodes from the scene
-onready var FSM = load("res://scenes/Point_and_Click/scripts/FSM.gd").new()
-onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/actions.gd").new()
-onready var animation_player = $Animations
-
-# Lets model our character as a set of queue of actions
-onready var queue = FSM.Queue.new()
+extends "res://scenes/Point_and_Click/scripts/Player.gd"
 
 # Player variables
 const SPEED = 5
 const MINIMUM_DISTANCE = 0.5
-var inventory
 var talking = false
 var talk_bubble
 var talk_bubble_timer
 var talk_bubble_offset = Vector3(-.6, 9.5, 0)
 
+var animation_player
+
 func _ready():
+	animation_player = $Animations
+
 	talk_bubble = $"Talk Bubble"
 	talk_bubble_timer = get_node("Talk Bubble/Timer")
 	talk_bubble_timer.connect("timeout", self, "quiet")
 	talk_bubble.visible = false
 
+func _physics_process(_delta):
+	# Move Cole's bubble to above his head
+	talk_bubble.rect_position = camera.unproject_position(
+			transform.origin + talk_bubble_offset
+	)
+	
+	# Process the queue
+	self.process_queue()
 
+
+# Functions to create elements of the QUEUE
 func animate(animation):
 	$Animations.play(animation)
 
@@ -42,24 +43,24 @@ func walk_to(object):
 		var path = navigation.get_simple_path(begin, end, true)
 
 		queue.clear()
-		queue.append(FSM.Animate.new(self, "walk"))
-		queue.append(FSM.WalkPath.new(self, path))
-		queue.append(FSM.Animate.new(self, "idle"))
+		queue.append(STATES.Animate.new(self, "walk"))
+		queue.append(STATES.WalkPath.new(self, path))
+		queue.append(STATES.Animate.new(self, "idle"))
 
 
 func go_to(object):
 	# Transition between areas, walk to the point we need, and inform the obj
 	walk_to(object)
-	queue.append(FSM.PerformActionOnObject.new(self, ACTIONS.go_to, object))
+	queue.append(STATES.PerformActionOnObject.new(self, ACTIONS.go_to, object))
 
 
 func get_close_and_perform_action(action, object):
 	# First of all, walk to the object
 	walk_to(object)
-	queue.append(FSM.FaceObject.new(self, object))
-	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
-	queue.append(FSM.PerformActionOnObject.new(self, action, object))
-	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
+	queue.append(STATES.FaceObject.new(self, object))
+	queue.append(STATES.AnimateUntilFinished.new(self, 'take_raise'))
+	queue.append(STATES.PerformActionOnObject.new(self, action, object))
+	queue.append(STATES.AnimateUntilFinished.new(self, 'take_down'))
 
 
 func open(object):
@@ -72,11 +73,11 @@ func use(object):
 
 func take(object):
 	walk_to(object)
-	queue.append(FSM.FaceObject.new(self, object))
-	queue.append(FSM.AnimateUntilFinished.new(self, 'take_raise'))
-	queue.append(FSM.PerformActionOnObject.new(self, ACTIONS.take, object))
-	queue.append(FSM.AddToInventory.new(self, object))
-	queue.append(FSM.AnimateUntilFinished.new(self, 'take_down'))
+	queue.append(STATES.FaceObject.new(self, object))
+	queue.append(STATES.AnimateUntilFinished.new(self, 'take_raise'))
+	queue.append(STATES.PerformActionOnObject.new(self, ACTIONS.take, object))
+	queue.append(STATES.AddToInventory.new(self, object))
+	queue.append(STATES.AnimateUntilFinished.new(self, 'take_down'))
 
 
 func face_direction(direction):
@@ -98,7 +99,7 @@ func face_object_and_do(action, object):
 
 func examine(object):
 	face_object_and_do(ACTIONS.examine, object)
-	
+
 func read(object):
 	face_object_and_do(ACTIONS.read, object)
 
@@ -111,20 +112,8 @@ func say(text):
 	talk_bubble.text = text
 	talk_bubble.visible = true
 	talk_bubble_timer.start()
-	
+
 
 func use_item(what, where):
 	say("I don't know how to use the " + what.oname +
 		" with the " + where.oname)
-
-
-func _physics_process(_delta):
-	# Move Cole's bubble to above his head
-	talk_bubble.rect_position = camera.unproject_position(
-			transform.origin + talk_bubble_offset
-	)
-	
-	var current_action = queue.current()
-
-	if current_action:
-		current_action.run()

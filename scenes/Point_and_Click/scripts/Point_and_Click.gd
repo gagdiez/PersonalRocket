@@ -31,7 +31,7 @@ func init(_world, _viewport, _avoid, _players):
 	world = _world
 	
 	var base_dir = self.get_script().get_path().get_base_dir()
-	ACTIONS = load(base_dir + "/actions.gd").new()
+	ACTIONS = load(base_dir + "/Actions.gd").new()
 	
 	label = get_node("GUI/Cursor Label")
 	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
@@ -77,18 +77,12 @@ func point():
 func click():
 	# Function called when a click is made
 	if obj_under_mouse:
-		match current_action.type:
-			ACTIONS.IMMEDIATE:
-				current_player.call(current_action.function, obj_under_mouse)
-			ACTIONS.TO_COMBINE:
-				# Combine action with this object
-				current_action.combine(obj_under_mouse)
-			ACTIONS.COMBINED:
-				# Action that carries an object
-				current_player.call(current_action.function,
-									current_action.object,
-									obj_under_mouse)
-				current_action.uncombine()
+		if current_action.type == ACTIONS.TO_COMBINE:
+			# Combine action with this object
+			current_action.combine(obj_under_mouse)
+		else:
+			current_player.do_action_in_object(current_action, obj_under_mouse)
+			current_action.uncombine()
 	else:
 		current_action.uncombine()
 		idx_current_action = 0

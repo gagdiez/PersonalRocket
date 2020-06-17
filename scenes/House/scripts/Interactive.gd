@@ -2,7 +2,7 @@
 extends StaticBody
 
 # All actions
-onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/actions.gd").new()
+onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/Actions.gd").new()
 
 # Actions that can be performed on the object
 onready var actions = [ACTIONS.examine]
