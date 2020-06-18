@@ -11,7 +11,7 @@ var navigation
 var current_action
 
 func _ready():
-	actions = [ACTIONS.talk]
+	actions = [ACTIONS.talk_to]
 
 func do_action_in_object(action, object):
 	# Function called by the point and click system when we click on an object

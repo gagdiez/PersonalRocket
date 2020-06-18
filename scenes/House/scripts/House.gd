@@ -9,15 +9,20 @@ func _ready():
 	$Cole.face_direction(Vector3(-1, 0, 0))
 	
 	$"Shadow Cole".camera = $House/Living/Camera
+	$"Shadow Cole".navigation = $House/Navigation
 
 	all_interactive_objects = $"House/Room Left/Interactive".get_children()
 	all_interactive_objects += $"House/Living/Interactive".get_children()
 
-	point_and_click = $"Point and Click"	
+	point_and_click = $"Point and Click"
 	point_and_click.init(get_world(), get_viewport(), all_interactive_objects,
 						 [$Cole])
-
+	
 	transition($Cole, $House/Living)
+	
+	print($Cole.navigation)
+	var intro = $CutScenes/Intro
+	intro.start()
 
 
 func transition(who, to):

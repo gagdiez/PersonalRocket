@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/Point_and_Click/scripts/Inventory.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Point_and_Click/scripts/Point_and_Click.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Point_and_Click/scripts/CutScene.gd" type="Script" id=3]
 
 [node name="Point and Click" type="Node"]
 script = ExtResource( 2 )
@@ -38,3 +39,6 @@ columns = 16
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CutScenes" type="Node" parent="."]
+script = ExtResource( 3 )

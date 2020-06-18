@@ -10,14 +10,15 @@ var talk_bubble_offset = Vector3(-.6, 9.5, 0)
 
 var animation_player
 
+
 func _ready():
 	._ready()
 	animation_player = $Animations
 
 	talk_bubble = $"Talk Bubble"
 	talk_bubble_timer = get_node("Talk Bubble/Timer")
-	talk_bubble_timer.connect("timeout", self, "quiet")
 	talk_bubble.visible = false
+
 
 func _physics_process(_delta):
 	# Move Cole's bubble to above his head
@@ -91,28 +92,28 @@ func face_direction(direction):
 		$Sprite.scale.x = 1
 
 
-func face_object_and_do(action, object):
+func face_object(object):
 	if object.get("position"):
 		var direction = object.position - self.transform.origin
 		face_direction(direction)
-	say(object.call(action.function, self))
 
 
 func examine(object):
-	face_object_and_do(ACTIONS.examine, object)
+	face_object(object)
+	say(object.call(ACTIONS.examine.function, self))
+
 
 func read(object):
-	face_object_and_do(ACTIONS.read, object)
+	face_object(object)
+	say(object.call(ACTIONS.read.function, self))
+
 
 func quiet():
 	talk_bubble.visible = false
 
 
 func say(text):
-	talk_bubble_timer.stop()
-	talk_bubble.text = text
-	talk_bubble.visible = true
-	talk_bubble_timer.start()
+	queue.append(STATES.Say.new(self, text))
 
 
 func use_item(what, where):
@@ -120,5 +121,5 @@ func use_item(what, where):
 		" with the " + where.oname)
 
 func talk_to(who):
-	queue.append(STATES.FaceObject.new(self, who))
-	queue.append(STATES.Say.new(self, "Oh, hi " + who.name))
+	walk_to(who)
+	queue.append(STATES.TalkTo.new(self, who))

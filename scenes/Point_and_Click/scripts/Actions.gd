@@ -51,8 +51,10 @@ var examine = Action.new("examine", "Examine", IMMEDIATE)
 var search = Action.new("search", "Search", IMMEDIATE)
 var use = Action.new("use", "Use", IMMEDIATE)
 var open = Action.new("open", "Open", IMMEDIATE)
-var talk = Action.new("talk_to", "Talk to", IMMEDIATE)
+var talk_to = Action.new("talk_to", "Talk to", IMMEDIATE)
 var use_item = Action.new("use_item", "Use", TO_COMBINE, 'with')
+var say = Action.new("say", "", IMMEDIATE)
+
 
 # The empty action
 var none = Action.new("", "", IMMEDIATE)

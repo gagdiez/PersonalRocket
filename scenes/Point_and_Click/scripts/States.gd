@@ -91,16 +91,41 @@ class PerformActionOnObject extends State:
 
 
 class Say extends State:
+	var said = false
 	var who
 	var what
 	
 	func _init(_who, _what):
 		who = _who
 		what = _what
+	
+	func run():
+		if said:
+			return
+		# Only run this once
+		who.talk_bubble_timer.stop()
+		who.talk_bubble.text = what
+		who.talk_bubble.visible = true
+		who.talk_bubble_timer.start()
+		who.talk_bubble_timer.connect("timeout", self, "quiet")
+		said = true
+	
+	func quiet():
+		who.quiet()
+		finished = true	
+
+
+class TalkTo extends State:
+	var who
+	var whom
+	
+	func _init(_who, _whom):
+		who = _who
+		whom = _whom
 		
 	func run():
 		blocked = true
-		who.say(what)
+		whom.talking(who)
 		finished = true
 
 
