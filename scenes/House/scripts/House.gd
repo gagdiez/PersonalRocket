@@ -20,7 +20,6 @@ func _ready():
 	
 	transition($Cole, $House/Living)
 	
-	print($Cole.navigation)
 	var intro = $CutScenes/Intro
 	intro.start()
 

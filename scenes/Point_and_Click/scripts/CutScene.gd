@@ -5,10 +5,6 @@ onready var STATES = load("res://scenes/Point_and_Click/scripts/States.gd")
 onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/Actions.gd").new()
 
 class PlayerAction:
-	
-	var first_run = true
-	var finished
-	var blocked
 	var who
 	var action
 	var what
@@ -17,28 +13,15 @@ class PlayerAction:
 		who = _who
 		action = _action
 		what = _what
-		finished = false
-		blocked = false
-	
-	func run():
-		if first_run:
-			who.call(action.function, what)
-			first_run = false
-		
-		if who.queue.empty():
-			finished = true
 
+var scene_actions = []
+var current_scene
 
-var events
+func play():
+	if current_scene:
+		current_scene.who.disconnect("action_finished", self, "play")
 
-func start():
-	for e in events:
-		queue.append(e)
-	print(queue)
-	
-func _physics_process(_delta):
-	# Process the queue
-	var current_action = queue.current()
-
-	if current_action:
-		current_action.run()
+	if not scene_actions.empty():
+		current_scene = scene_actions.pop_front()
+		current_scene.who.connect("action_finished", self, "play")
+		current_scene.who.call(current_scene.action.function, current_scene.what)

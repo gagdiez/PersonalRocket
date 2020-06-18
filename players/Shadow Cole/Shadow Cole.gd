@@ -71,10 +71,15 @@ func face_direction(direction):
 
 func quiet():
 	talk_bubble.visible = false
+	.action_finished()
 
 
 func say(text):
-	queue.append(STATES.Say.new(self, text))
+	talk_bubble_timer.stop()
+	talk_bubble.text = text
+	talk_bubble.visible = true
+	talk_bubble_timer.start()
+	talk_bubble_timer.connect("timeout", self, "quiet")
 
 
 func talking(whom):

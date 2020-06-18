@@ -35,7 +35,7 @@ func animate(animation):
 	$Animations.play(animation)
 
 
-func walk_to(object):
+func walk_to(object, emit_signal=true):
 	var end = navigation.get_closest_point(object.position)
 
 	if (end - transform.origin).length() > MINIMUM_DISTANCE:
@@ -48,21 +48,26 @@ func walk_to(object):
 		queue.append(STATES.Animate.new(self, "walk"))
 		queue.append(STATES.WalkPath.new(self, path))
 		queue.append(STATES.Animate.new(self, "idle"))
+		
+		if emit_signal:
+			queue.append(STATES.Finished.new(self))
 
 
 func go_to(object):
 	# Transition between areas, walk to the point we need, and inform the obj
-	walk_to(object)
+	walk_to(object, false)
 	queue.append(STATES.PerformActionOnObject.new(self, ACTIONS.go_to, object))
+	queue.append(STATES.Finished.new(self))
 
 
 func get_close_and_perform_action(action, object):
 	# First of all, walk to the object
-	walk_to(object)
+	walk_to(object, false)
 	queue.append(STATES.FaceObject.new(self, object))
 	queue.append(STATES.AnimateUntilFinished.new(self, 'take_raise'))
 	queue.append(STATES.PerformActionOnObject.new(self, action, object))
 	queue.append(STATES.AnimateUntilFinished.new(self, 'take_down'))
+	queue.append(STATES.Finished.new(self))
 
 
 func open(object):
@@ -74,12 +79,13 @@ func use(object):
 
 
 func take(object):
-	walk_to(object)
+	walk_to(object, false)
 	queue.append(STATES.FaceObject.new(self, object))
 	queue.append(STATES.AnimateUntilFinished.new(self, 'take_raise'))
 	queue.append(STATES.PerformActionOnObject.new(self, ACTIONS.take, object))
 	queue.append(STATES.AddToInventory.new(self, object))
 	queue.append(STATES.AnimateUntilFinished.new(self, 'take_down'))
+	queue.append(STATES.Finished.new(self))
 
 
 func face_direction(direction):
@@ -96,30 +102,39 @@ func face_object(object):
 	if object.get("position"):
 		var direction = object.position - self.transform.origin
 		face_direction(direction)
+	.action_finished()
 
 
 func examine(object):
 	face_object(object)
 	say(object.call(ACTIONS.examine.function, self))
+	.action_finished()
 
 
 func read(object):
 	face_object(object)
 	say(object.call(ACTIONS.read.function, self))
+	.action_finished()
 
 
 func quiet():
 	talk_bubble.visible = false
+	.action_finished()
 
 
 func say(text):
-	queue.append(STATES.Say.new(self, text))
-
-
+	talk_bubble_timer.stop()
+	talk_bubble.text = text
+	talk_bubble.visible = true
+	talk_bubble_timer.start()
+	talk_bubble_timer.connect("timeout", self, "quiet")
+	
+	
 func use_item(what, where):
 	say("I don't know how to use the " + what.oname +
 		" with the " + where.oname)
+	.action_finished()
 
 func talk_to(who):
-	walk_to(who)
-	queue.append(STATES.TalkTo.new(self, who))
+	walk_to(who, false)
+	.action_finished()

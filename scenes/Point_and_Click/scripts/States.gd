@@ -1,6 +1,7 @@
 class State:
 	onready var blocked = false
 	onready var finished = false
+	var who
 
 	func run():
 		pass
@@ -9,7 +10,6 @@ class State:
 # PREMADE STATES
 class AddToInventory extends State:
 	var object_to_take
-	var who
 	
 	func _init(_who, _object_to_take):
 		object_to_take = _object_to_take
@@ -22,7 +22,6 @@ class AddToInventory extends State:
 
 
 class Animate extends State:
-	var who
 	var animation
 	var player
 	
@@ -36,7 +35,6 @@ class Animate extends State:
 
 
 class AnimateUntilFinished extends State:
-	var who
 	var animation
 	var player
 	
@@ -49,16 +47,15 @@ class AnimateUntilFinished extends State:
 		if not finished:
 			blocked = true
 			who.animate(animation)
-			if not player.is_connected("animation_finished", self, "finished"):
-				player.connect("animation_finished", self, "finished")
+			if not player.is_connected("animation_finished", self, "animation_finished"):
+				player.connect("animation_finished", self, "animation_finished")
 	
-	func finished(arg):
+	func animation_finished(_arg):
 		finished = true
 		player.disconnect("animation_finished", self, "finished")
 
 
 class FaceObject extends State:
-	var who
 	var object
 	
 	func _init(_who, _object):
@@ -71,8 +68,15 @@ class FaceObject extends State:
 		finished = true
 
 
+class Finished extends State:
+	func _init(_who):
+		who = _who
+	
+	func run():
+		who.action_finished()
+		finished = true
+
 class PerformActionOnObject extends State:
-	var who
 	var object
 	var action
 	
@@ -86,37 +90,10 @@ class PerformActionOnObject extends State:
 		
 		# Perform action on object
 		object.call(action.function, who)
-	
 		finished = true
 
 
-class Say extends State:
-	var said = false
-	var who
-	var what
-	
-	func _init(_who, _what):
-		who = _who
-		what = _what
-	
-	func run():
-		if said:
-			return
-		# Only run this once
-		who.talk_bubble_timer.stop()
-		who.talk_bubble.text = what
-		who.talk_bubble.visible = true
-		who.talk_bubble_timer.start()
-		who.talk_bubble_timer.connect("timeout", self, "quiet")
-		said = true
-	
-	func quiet():
-		who.quiet()
-		finished = true	
-
-
 class TalkTo extends State:
-	var who
 	var whom
 	
 	func _init(_who, _whom):
@@ -133,7 +110,6 @@ class WalkPath extends State:
 	# Function to walk
 	var path = []
 	var path_idx = 0
-	var who
 	 
 	func _init(_who, _path):
 		who = _who
