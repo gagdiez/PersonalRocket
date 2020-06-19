@@ -4,6 +4,7 @@ func start():
 	var cole = get_node("../../Cole")
 	var shadow_cole = get_node("../../Shadow Cole")
 	var cup = get_node("../../House/Living/Interactive/Cup")
+
 	scene_actions = [
 		PlayerAction.new(cole, ACTIONS.walk_to, shadow_cole),
 		PlayerAction.new(cole, ACTIONS.say, "Hi Shadow Cole"),
@@ -15,5 +16,5 @@ func start():
 		PlayerAction.new(cole, ACTIONS.take, cup),
 		PlayerAction.new(cole, ACTIONS.say, "Sweeeet"),
 	]
-	
+
 	.play()

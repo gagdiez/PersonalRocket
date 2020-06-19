@@ -24,7 +24,6 @@ func do_action_in_object(action, object):
 
 func action_finished():
 	emit_signal("action_finished")
-	print("Emiting signal")
 
 func process_queue():
 	# Process the queue
