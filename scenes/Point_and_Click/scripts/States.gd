@@ -44,11 +44,10 @@ class AnimateUntilFinished extends State:
 		player = who.animation_player
 	
 	func run():
-		if not finished:
-			blocked = true
-			who.animate(animation)
-			if not player.is_connected("animation_finished", self, "animation_finished"):
-				player.connect("animation_finished", self, "animation_finished")
+		blocked = true
+		who.animate(animation)
+		if not player.is_connected("animation_finished", self, "animation_finished"):
+			player.connect("animation_finished", self, "animation_finished")
 	
 	func animation_finished(_arg):
 		finished = true
@@ -76,6 +75,7 @@ class Finished extends State:
 		who.action_finished()
 		finished = true
 
+
 class PerformActionOnObject extends State:
 	var object
 	var action
@@ -87,9 +87,36 @@ class PerformActionOnObject extends State:
 		
 	func run():
 		blocked = true
-		
 		# Perform action on object
 		object.call(action.function, who)
+		finished = true
+
+
+class Say extends State:
+	var what
+	var label
+	var timer
+	var said = false
+	
+	func _init(_who, _what, _label, _timer):
+		who = _who
+		what = _what
+		label = _label
+		timer = _timer
+	
+	func run():
+		blocked = true
+		if said:
+			return
+		timer.stop()
+		label.text = what
+		label.visible = true
+		timer.start()
+		timer.connect("timeout", self, "quiet")
+		said = true
+		
+	func quiet():
+		label.visible = false
 		finished = true
 
 
