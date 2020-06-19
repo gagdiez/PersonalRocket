@@ -10,7 +10,7 @@ func _ready():
 	position = self.transform.origin + Vector3(0, 0, 2)
 
 
-func open(who):
+func open(_who):
 	var end = Vector3(transform.origin.x, transform.origin.y, -23.824)
 
 	tween.interpolate_property(self, "translation", self.transform.origin, end,

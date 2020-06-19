@@ -3,5 +3,5 @@ extends "res://scenes/Point_and_Click/scripts/Interactive.gd"
 func _ready():
 	oname = "Mr Roboto"
 	
-func examine(who):
+func examine(_who):
 	return "That is my best friend, Mister Roboto"

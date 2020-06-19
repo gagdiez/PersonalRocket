@@ -3,7 +3,6 @@ extends "res://scenes/Point_and_Click/scripts/Player.gd"
 # Player variables
 const SPEED = 5
 const MINIMUM_DISTANCE = 0.5
-var talking = false
 var talk_bubble
 var talk_bubble_timer
 var talk_bubble_offset = Vector3(-.6, 9.5, 0)
@@ -82,5 +81,5 @@ func say(text):
 	talk_bubble_timer.connect("timeout", self, "quiet")
 
 
-func talking(whom):
+func talking(_whom):
 	pass#cut_scene.start("shadow_conversation")
