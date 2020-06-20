@@ -9,7 +9,7 @@ var camera
 var inventory
 var navigation
 var current_action
-signal action_finished
+signal player_finished
 
 func _ready():
 	actions = [ACTIONS.talk_to]
@@ -23,7 +23,7 @@ func do_action_in_object(action, object):
 			self.call(action.function, action.object, object)
 
 func action_finished():
-	emit_signal("action_finished")
+	emit_signal("player_finished")
 
 func process_queue():
 	# Process the queue

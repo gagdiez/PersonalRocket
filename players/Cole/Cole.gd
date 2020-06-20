@@ -17,6 +17,7 @@ func _ready():
 	talk_bubble_timer = get_node("Talk Bubble/Timer")
 	talk_bubble.visible = false
 
+
 func _physics_process(_delta):
 	# Move Cole's bubble to above his head
 	talk_bubble.rect_position = camera.unproject_position(

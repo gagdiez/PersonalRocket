@@ -16,7 +16,8 @@ func _ready():
 	talk_bubble = $"Talk Bubble"
 	talk_bubble_timer = get_node("Talk Bubble/Timer")
 	talk_bubble.visible = false
-	
+	talk_bubble_timer.connect("timeout", self, "quiet")
+
 	position = self.transform.origin + Vector3(5, 0, 0)
 
 func _physics_process(_delta):
@@ -78,7 +79,6 @@ func say(text):
 	talk_bubble.text = text
 	talk_bubble.visible = true
 	talk_bubble_timer.start()
-	talk_bubble_timer.connect("timeout", self, "quiet")
 
 
 func talking(_whom):

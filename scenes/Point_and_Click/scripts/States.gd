@@ -116,6 +116,7 @@ class Say extends State:
 		said = true
 		
 	func quiet():
+		timer.disconnect("timeout", self, "quiet")
 		label.visible = false
 		finished = true
 

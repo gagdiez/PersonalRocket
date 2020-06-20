@@ -2,6 +2,7 @@ extends Spatial
 
 var point_and_click
 var all_interactive_objects
+var cutscenes
 
 func _ready():
 	$Cole.navigation = $House/Navigation
@@ -14,14 +15,18 @@ func _ready():
 	all_interactive_objects = $"House/Room Left/Interactive".get_children()
 	all_interactive_objects += $"House/Living/Interactive".get_children()
 
+	cutscenes = [$CutScenes/Intro]
+	for cs in cutscenes:
+		cs.choice_gui = $"Point and Click/GUI/Dialog/Choices"
+		cs.init()
+
 	point_and_click = $"Point and Click"
 	point_and_click.init(get_world(), get_viewport(), all_interactive_objects,
 						 [$Cole])
 	
 	transition($Cole, $House/Living)
-	
-	var intro = $CutScenes/Intro
-	intro.start()
+
+	$CutScenes/Intro.play()
 
 
 func transition(who, to):
