@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 # This is a point and click game, sounds fair to have all the time
 # in mind where is mouse, which object is under it, which action is currently
@@ -33,11 +33,11 @@ func init(_world, _viewport, _avoid, _players):
 	var base_dir = self.get_script().get_path().get_base_dir()
 	ACTIONS = load(base_dir + "/Actions.gd").new()
 	
-	label = get_node("GUI/Cursor Label")
+	label = $"Cursor Label"
 	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
 	
 	current_action = ACTIONS.none
-	current_player.inventory = $GUI/Inventory
+	current_player.inventory = $Inventory
 	current_inventory = current_player.inventory
 
 

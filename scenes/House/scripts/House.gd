@@ -17,7 +17,7 @@ func _ready():
 
 	cutscenes = [$CutScenes/Intro]
 	for cs in cutscenes:
-		cs.choice_gui = $"Point and Click/GUI/Dialog/Choices"
+		cs.choice_gui = $"Point and Click/Dialog/Choices"
 		cs.init()
 
 	point_and_click = $"Point and Click"

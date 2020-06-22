@@ -1,16 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/Point_and_Click/scripts/Inventory.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Point_and_Click/scripts/Point_and_Click.gd" type="Script" id=2]
-[ext_resource path="res://scenes/Point_and_Click/scripts/CutScene.gd" type="Script" id=3]
 [ext_resource path="res://scenes/Point_and_Click/scripts/Dialog.gd" type="Script" id=4]
 
-[node name="Point and Click" type="Node"]
+[node name="GUI" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="GUI" type="Node2D" parent="."]
-
-[node name="Cursor Label" type="RichTextLabel" parent="GUI"]
+[node name="Cursor Label" type="RichTextLabel" parent="."]
 margin_left = 467.0
 margin_top = 259.0
 margin_right = 757.0
@@ -21,27 +18,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inventory" type="Panel" parent="GUI"]
+[node name="Inventory" type="Panel" parent="."]
 show_behind_parent = true
-margin_right = 1024.0
-margin_bottom = 54.0
+rect_min_size = Vector2( 1024, 54 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slots" type="GridContainer" parent="GUI/Inventory"]
+[node name="Slots" type="GridContainer" parent="Inventory"]
 margin_left = 5.0
 margin_top = 3.0
-margin_right = 1025.0
+margin_right = 1019.0
 margin_bottom = 51.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 custom_constants/hseparation = 5
 columns = 16
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dialog" type="Panel" parent="GUI"]
+[node name="Dialog" type="Panel" parent="."]
 visible = false
 show_behind_parent = true
 margin_left = 1.0
@@ -52,7 +50,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Choices" type="VBoxContainer" parent="GUI/Dialog"]
+[node name="Choices" type="VBoxContainer" parent="Dialog"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 7.0
@@ -67,6 +65,3 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="CutScenes" type="Node" parent="."]
-script = ExtResource( 3 )
