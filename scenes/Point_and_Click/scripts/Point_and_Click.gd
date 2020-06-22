@@ -23,7 +23,7 @@ var idx_current_action = 0
 var mouse_offset = Vector2(8, 8)
 
 
-func init(_world, _viewport, _avoid, _players):
+func init(_world, _viewport, _avoid, _players, cutscenes):
 	avoid = _avoid
 	viewport = _viewport
 	camera = viewport.get_camera()
@@ -39,6 +39,10 @@ func init(_world, _viewport, _avoid, _players):
 	current_action = ACTIONS.none
 	current_player.inventory = $Inventory
 	current_inventory = current_player.inventory
+	
+	for cs in cutscenes:
+		cs.choice_gui = $Dialog/Choices
+		cs.init()
 
 
 func get_object_under_mouse(mouse_pos):

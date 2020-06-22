@@ -16,13 +16,10 @@ func _ready():
 	all_interactive_objects += $"House/Living/Interactive".get_children()
 
 	cutscenes = [$CutScenes/Intro]
-	for cs in cutscenes:
-		cs.choice_gui = $"Point and Click/Dialog/Choices"
-		cs.init()
 
 	point_and_click = $"Point and Click"
 	point_and_click.init(get_world(), get_viewport(), all_interactive_objects,
-						 [$Cole])
+						 [$Cole], cutscenes)
 	
 	transition($Cole, $House/Living)
 
