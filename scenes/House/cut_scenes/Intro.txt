@@ -1,0 +1,34 @@
+cole walk_to: shadow_cole
+shadow_cole say: How do you feel?
+shadow_cole say: And don't lie
+
+choice:
+	option: Cool
+		cole say: Cool
+			shadow_cole say: Come on..
+
+	option: Actually
+		cole say: Actually...
+		
+		choice:
+		
+			option: What is life?
+				cole say: What is life?
+				shadow_cole say: I don't know
+				
+			option: What is love? !{cole.something} >= 3
+				cole say: What is love?
+				shadow_cole say: Baby don't hurt me
+							
+			return: Nevermind
+				cole say: Nevermind     
+
+	return: Lets talk about something else
+		cole say: Move on
+        
+cole say: You liking the intro so far?
+shadow_cole say: Best intro ever
+cole say: I know, right?
+cole say: Gotta go take the cup
+cole take: cup
+cole say: Sweeeeet

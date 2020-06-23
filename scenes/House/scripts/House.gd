@@ -8,7 +8,7 @@ func _ready():
 	$Cole.navigation = $House/Navigation
 	$Cole.camera = $House/Living/Camera
 	$Cole.face_direction(Vector3(-1, 0, 0))
-	
+
 	$"Shadow Cole".camera = $House/Living/Camera
 	$"Shadow Cole".navigation = $House/Navigation
 
@@ -24,6 +24,7 @@ func _ready():
 	transition($Cole, $House/Living)
 
 	$CutScenes/Intro.play()
+	
 
 
 func transition(who, to):

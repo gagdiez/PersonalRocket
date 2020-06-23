@@ -2,6 +2,7 @@ extends Node
 
 var choice_gui
 
+onready var PARSER = load("res://scenes/Point_and_Click/scripts/Parser.gd").new()
 onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/Actions.gd").new()
 
 
@@ -79,6 +80,12 @@ class Choice:
 
 var scene_actions = []
 var current_action
+var str2obj
+var scene_file
+
+func init():
+	var parser = PARSER.Parser.new(self, choice_gui, str2obj)
+	scene_actions = parser.parse_file(scene_file)
 
 func play():
 	if current_action:
