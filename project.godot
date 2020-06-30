@@ -12,12 +12,22 @@ _global_script_classes=[ {
 "base": "Interactive",
 "class": "BasePlayer",
 "language": "GDScript",
-"path": "res://scenes/Point_and_Click/scripts/Player.gd"
+"path": "res://addons/Point_and_Click/scripts/BasePlayer.gd"
+}, {
+"base": "Node",
+"class": "CutScene",
+"language": "GDScript",
+"path": "res://addons/Point_and_Click/scripts/CutScene.gd"
 }, {
 "base": "Spatial",
 "class": "Interactive",
 "language": "GDScript",
-"path": "res://scenes/Point_and_Click/scripts/Interactive.gd"
+"path": "res://addons/Point_and_Click/scripts/Interactive.gd"
+}, {
+"base": "BasePlayer",
+"class": "Player",
+"language": "GDScript",
+"path": "res://addons/Point_and_Click/scripts/Player.gd"
 }, {
 "base": "Interactive",
 "class": "Transition",
@@ -26,7 +36,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BasePlayer": "",
+"CutScene": "",
 "Interactive": "",
+"Player": "",
 "Transition": ""
 }
 
@@ -42,7 +54,7 @@ mouse_cursor/custom_image="res://pixel_art/cursor.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "MagicaVoxelImporter" )
+enabled=PoolStringArray( "MagicaVoxelImporter", "Point_and_Click" )
 
 [input]
 

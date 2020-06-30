@@ -1,4 +1,4 @@
-extends "res://scenes/Point_and_Click/scripts/CutScene.gd"
+extends CutScene
 
 func init():
 	var cole = get_node("../../Cole")
