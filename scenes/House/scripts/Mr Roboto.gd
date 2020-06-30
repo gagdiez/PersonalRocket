@@ -1,4 +1,4 @@
-extends "res://scenes/Point_and_Click/scripts/Interactive.gd"
+extends Interactive
 
 func _ready():
 	oname = "Mr Roboto"

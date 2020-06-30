@@ -1,9 +1,9 @@
-extends "res://scenes/Point_and_Click/scripts/Interactive.gd"
+extends Interactive
 
 onready var tween = $Tween
 
 func _ready():
-	actions = [ACTIONS.open, ACTIONS.examine]
+	main_action = ACTIONS.open
 
 	description = "My wardrobe, maybe I can find something useful there"
 

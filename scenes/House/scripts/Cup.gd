@@ -1,5 +1,5 @@
-extends "res://scenes/Point_and_Click/scripts/Interactive.gd"
+extends Interactive
 
 func _ready():
-	actions = [ACTIONS.take, ACTIONS.examine]
+	main_action = ACTIONS.take
 	thumbnail = 'thumbnails/cup.png'

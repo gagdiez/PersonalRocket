@@ -17,7 +17,6 @@ var camera
 var avoid
 var players
 var ACTIONS
-var idx_current_action = 0
 
 # For showing the label of objects under mouse
 var mouse_offset = Vector2(8, 8)
@@ -67,41 +66,41 @@ func point():
 	
 	if obj_under_mouse:
 		if current_action.type != ACTIONS.COMBINED:
-			var actions = obj_under_mouse.actions
-			current_action = actions[idx_current_action % actions.size()]
+			current_action = obj_under_mouse.main_action
 			label.text =  current_action.text
 
 		label.text += " " + obj_under_mouse.oname
 	else:
 		if current_action.type != ACTIONS.COMBINED:
 			current_action = ACTIONS.none
-			idx_current_action = 0
 
 
 func click():
-	# Function called when a click is made
+	# Function called when a left click is made
 	if obj_under_mouse:
 		if current_action.type == ACTIONS.TO_COMBINE:
 			# Combine action with this object
 			current_action.combine(obj_under_mouse)
 		else:
-			current_player.do_action_in_object(current_action, obj_under_mouse)
+			current_player.do_action_in_object(current_action,
+											   obj_under_mouse)
 			current_action.uncombine()
 	else:
 		current_action.uncombine()
-		idx_current_action = 0
 
 
-func change_action(dir):
-	# Change action to be used in the objects
+func secondary_click():
+	# Function called when a right click is made
 	current_action.uncombine()
-	idx_current_action += dir
+	
+	if obj_under_mouse:
+		current_player.do_action_in_object(obj_under_mouse.secondary_action,
+										   obj_under_mouse)
+
 
 
 func _process(_delta):
 	# Get mouse position
-	viewport = get_viewport()
-	camera = viewport.get_camera()
 	mouse_position = viewport.get_mouse_position()
 	
 	# Check if there is an object under the mouse
@@ -110,16 +109,12 @@ func _process(_delta):
 	else:
 		obj_under_mouse = get_object_under_mouse(mouse_position)
 
-	# Modify actions based on user input
-	if Input.is_action_just_released("ui_wheel_up"):
-		change_action(1)
-
-	if Input.is_action_just_released("ui_wheel_down"):
-		change_action(-1)
-
 	# Change label depending on what is under the mouse
 	point()
 	
 	# Manage the click
-	if Input.is_action_just_released("ui_click"):
+	if Input.is_action_just_released("ui_main_click"):
 		click()
+
+	if Input.is_action_just_released("ui_secondary_click"):
+		secondary_click()

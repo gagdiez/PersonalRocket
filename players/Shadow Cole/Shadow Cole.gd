@@ -1,4 +1,4 @@
-extends "res://scenes/Point_and_Click/scripts/Player.gd"
+extends BasePlayer
 
 # Player variables
 const SPEED = 5

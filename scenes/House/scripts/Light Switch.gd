@@ -1,7 +1,7 @@
-extends "res://scenes/Point_and_Click/scripts/Interactive.gd"
+extends Interactive
 
 func _ready():
-	actions = [ACTIONS.use]
+	main_action = ACTIONS.use
 
 func use(_who):
 	$OmniLight.visible = not $OmniLight.visible

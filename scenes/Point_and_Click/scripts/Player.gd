@@ -1,7 +1,8 @@
-extends "res://scenes/Point_and_Click/scripts/Interactive.gd"
+extends Interactive
+class_name BasePlayer
 
 # A player is basically a queue of actions that is constantly running
-onready var STATES = load("res://scenes/Point_and_Click/scripts/States.gd")
+const STATES = preload("res://scenes/Point_and_Click/scripts/States.gd")
 onready var queue = load("res://scenes/Point_and_Click/scripts/Queue.gd").Queue.new()
 
 # The player knows where the camera is, where they can walk, and their inventory
@@ -9,13 +10,17 @@ var camera
 var inventory
 var navigation
 var current_action
+
 signal player_finished
 
 func _ready():
-	actions = [ACTIONS.talk_to]
+	main_action = ACTIONS.talk_to
 
 func do_action_in_object(action, object):
 	# Function called by the point and click system when we click on an object
+	if not action.function:
+		return
+
 	match action.type:
 		ACTIONS.IMMEDIATE:
 			self.call(action.function, object)

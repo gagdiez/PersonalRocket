@@ -1,4 +1,4 @@
-extends "Transition.gd"
+extends Transition
 
 func _ready():
 	position = Vector3(-7, 0 , -13.89)

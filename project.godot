@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Interactive",
+"class": "BasePlayer",
+"language": "GDScript",
+"path": "res://scenes/Point_and_Click/scripts/Player.gd"
+}, {
+"base": "Spatial",
+"class": "Interactive",
+"language": "GDScript",
+"path": "res://scenes/Point_and_Click/scripts/Interactive.gd"
+}, {
+"base": "Interactive",
+"class": "Transition",
+"language": "GDScript",
+"path": "res://scenes/House/scripts/Transition.gd"
+} ]
 _global_script_class_icons={
-
+"BasePlayer": "",
+"Interactive": "",
+"Transition": ""
 }
 
 [application]
@@ -29,19 +46,14 @@ enabled=PoolStringArray( "MagicaVoxelImporter" )
 
 [input]
 
-ui_click={
+ui_main_click={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
-ui_wheel_up={
+ui_secondary_click={
 "deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
- ]
-}
-ui_wheel_down={
-"deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 

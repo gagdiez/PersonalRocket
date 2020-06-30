@@ -1,11 +1,13 @@
 # Base class for interactive objects
 extends Spatial
+class_name Interactive
 
 # All actions
-onready var ACTIONS = load("res://scenes/Point_and_Click/scripts/Actions.gd").new()
+var ACTIONS = load("res://scenes/Point_and_Click/scripts/Actions.gd").new()
 
 # Actions that can be performed on the object
-onready var actions = [ACTIONS.examine]
+var main_action = ACTIONS.walk_to
+var secondary_action = ACTIONS.examine
 
 # Position in space where the player will stand to interact
 onready var position = self.transform.origin

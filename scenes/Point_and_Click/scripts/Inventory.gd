@@ -7,7 +7,8 @@ class Item extends TextureRect:
 	var object
 	var usable = true
 	var description
-	var actions
+	var main_action
+	var secondary_action
 	var oname
 	
 	var ACTIONS = load("res://scenes/Point_and_Click/scripts/Actions.gd").new()
@@ -15,7 +16,8 @@ class Item extends TextureRect:
 	func _init(_object):
 		object = _object
 		description = _object.description
-		actions = [ACTIONS.use_item, ACTIONS.examine]
+		main_action = ACTIONS.use_item
+		secondary_action = ACTIONS.examine
 		oname = _object.oname
 		
 		self.texture = load(_object.thumbnail)

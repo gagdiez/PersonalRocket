@@ -1,6 +1,6 @@
-extends "res://scenes/Point_and_Click/scripts/Interactive.gd"
+extends Interactive
 
 func _ready():
-	actions = [ACTIONS.take, ACTIONS.examine]
+	main_action = ACTIONS.take
 	position = self.transform.origin + Vector3(3, 0, 0)
 	thumbnail = 'thumbnails/pan.png'

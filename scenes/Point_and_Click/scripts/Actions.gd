@@ -1,5 +1,3 @@
-# Base class for actions
-
 # Each action will have:
 #  - a "function" called when executing
 #  - a "text" which can be shown in screen
