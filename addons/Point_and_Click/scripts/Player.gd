@@ -9,13 +9,14 @@ var SPEED = 5
 var MINIMUM_DISTANCE = 0.5
 
 func _physics_process(_delta):
-	# Move Cole's bubble to above his head
+	# Move player's bubble above they head
 	talk_bubble.rect_position = camera.unproject_position(
 			transform.origin + talk_bubble_offset
 	)
 	
 	# Process the queue
 	self.process_queue()
+
 
 # Functions to modify the graphics
 func animate(animation):
@@ -29,6 +30,7 @@ func face_direction(direction):
 		$Sprite.scale.x = -1
 	else:
 		$Sprite.scale.x = 1
+
 
 # Functions to populate the queue in response to clicks in objects
 func examine(object):
