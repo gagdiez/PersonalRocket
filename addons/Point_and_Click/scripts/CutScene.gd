@@ -1,12 +1,14 @@
 extends Node
 class_name CutScene
 
+# To be set before running init
 var choice_gui
 
 onready var SCENES = preload("Scenes.gd")
 onready var PARSER = preload("Parser.gd").new()
 onready var ACTIONS = preload("Actions.gd").new()
 
+# A Cutscene is a list of actions to be played one by one
 var scene_actions = []
 var current_action
 var str2obj

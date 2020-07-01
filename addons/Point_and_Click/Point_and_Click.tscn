@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/Point_and_Click/scripts/Inventory.gd" type="Script" id=1]
 [ext_resource path="res://addons/Point_and_Click/scripts/Point_and_Click.gd" type="Script" id=2]
+[ext_resource path="res://addons/Point_and_Click/scripts/CutScene.gd" type="Script" id=3]
 [ext_resource path="res://addons/Point_and_Click/scripts/Dialog.gd" type="Script" id=4]
 
-[node name="GUI" type="Node2D"]
+[node name="PointClick" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Cursor Label" type="RichTextLabel" parent="."]
@@ -46,6 +47,7 @@ margin_left = 1.0
 margin_top = 513.0
 margin_right = 1024.0
 margin_bottom = 600.0
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

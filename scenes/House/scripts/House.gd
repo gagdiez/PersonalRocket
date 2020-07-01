@@ -18,8 +18,8 @@ func _ready():
 	cutscenes = [$CutScenes/Intro]
 
 	point_and_click = $"Point and Click"
-	point_and_click.init(get_world(), get_viewport(), all_interactive_objects,
-						 [$Cole], cutscenes)
+	point_and_click.init($Cole, all_interactive_objects,
+						 cutscenes)
 	
 	transition($Cole, $House/Living)
 
@@ -40,7 +40,6 @@ func transition(who, to):
 	var to_camera = to.get_node("Camera")
 	to_camera.current = true
 	
-	point_and_click.camera = to_camera
 	point_and_click.avoid = avoid
 	
 	who.camera = to_camera

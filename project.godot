@@ -56,7 +56,7 @@ config/icon="res://icon.png"
 
 [display]
 
-mouse_cursor/custom_image="res://pixel_art/cursor.png"
+mouse_cursor/custom_image="res://addons/Point_and_Click/cursor.png"
 
 [editor_plugins]
 

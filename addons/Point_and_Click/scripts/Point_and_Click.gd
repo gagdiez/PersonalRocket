@@ -1,11 +1,13 @@
 extends Node2D
 
+onready var parent = get_parent()
+onready var ACTIONS = preload("Actions.gd").new()
+
 # This is a point and click game, sounds fair to have all the time
-# in mind where is mouse, which object is under it, which action is currently
-# selected, and  who's inventory is on screen (for multiplayer)
+# in mind where the mouse is, which object is under it, and the
+# current action (for combining actions)
 var current_action
-var current_inventory
-var current_player
+var player
 var label
 var mouse_position
 var obj_under_mouse
@@ -15,36 +17,33 @@ var world
 var viewport
 var camera
 var avoid
-var players
-var ACTIONS
 
 # For showing the label of objects under mouse
 var mouse_offset = Vector2(8, 8)
 
 
-func init(_world, _viewport, _avoid, _players, cutscenes):
-	avoid = _avoid
-	viewport = _viewport
+func init(_player:BasePlayer, _avoid:Array=[], cutscenes:Array=[]):
+	world = parent.get_world()
+	viewport = parent.get_viewport()
 	camera = viewport.get_camera()
-	current_player = _players[0]
-	world = _world
+	
+	avoid = _avoid
+	player = _player
 	
 	var base_dir = self.get_script().get_path().get_base_dir()
-	ACTIONS = load(base_dir + "/Actions.gd").new()
 	
 	label = $"Cursor Label"
 	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
 	
 	current_action = ACTIONS.none
-	current_player.inventory = $Inventory
-	current_inventory = current_player.inventory
+	player.inventory = $Inventory
 	
 	for cs in cutscenes:
 		cs.choice_gui = $Dialog/Choices
 		cs.init()
 
 
-func get_object_under_mouse(mouse_pos):
+func get_object_under_mouse(mouse_pos:Vector2):
 	# Function to retrieve which object is under the mouse...
 	var RAY_LENGTH = 50
 	
@@ -82,7 +81,7 @@ func click():
 			# Combine action with this object
 			current_action.combine(obj_under_mouse)
 		else:
-			current_player.do_action_in_object(current_action,
+			player.do_action_in_object(current_action,
 											   obj_under_mouse)
 			current_action.uncombine()
 	else:
@@ -92,18 +91,21 @@ func click():
 func secondary_click():
 	# Function called when a right click is made
 	if obj_under_mouse:
-		current_player.do_action_in_object(obj_under_mouse.secondary_action,
+		player.do_action_in_object(obj_under_mouse.secondary_action,
 										   obj_under_mouse)
 	current_action.uncombine()
 
 
 func _process(_delta):
+	viewport = parent.get_viewport()
+	camera = viewport.get_camera()
+	
 	# Get mouse position
 	mouse_position = viewport.get_mouse_position()
 	
 	# Check if there is an object under the mouse
-	if current_inventory.position_contained(mouse_position):
-		obj_under_mouse = current_inventory.get_object_in_position(mouse_position)
+	if player.inventory.position_contained(mouse_position):
+		obj_under_mouse = player.inventory.get_object_in_position(mouse_position)
 	else:
 		obj_under_mouse = get_object_under_mouse(mouse_position)
 
