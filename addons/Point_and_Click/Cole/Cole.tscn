@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://players/Cole/Cole.gd" type="Script" id=1]
-[ext_resource path="res://players/Cole/spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://addons/Point_and_Click/Cole/Cole.gd" type="Script" id=1]
+[ext_resource path="res://addons/Point_and_Click/Cole/spritesheet.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=1]
 length = 0.1

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/spritesheet.png-4a303adf0e38c3750076915febff2374.s3tc.stex"
-path.etc2="res://.import/spritesheet.png-4a303adf0e38c3750076915febff2374.etc2.stex"
+path.s3tc="res://.import/spritesheet.png-aeab6f21aa71f17866d983e564081fad.s3tc.stex"
+path.etc2="res://.import/spritesheet.png-aeab6f21aa71f17866d983e564081fad.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://players/Cole/spritesheet.png"
-dest_files=[ "res://.import/spritesheet.png-4a303adf0e38c3750076915febff2374.s3tc.stex", "res://.import/spritesheet.png-4a303adf0e38c3750076915febff2374.etc2.stex" ]
+source_file="res://addons/Point_and_Click/Cole/spritesheet.png"
+dest_files=[ "res://.import/spritesheet.png-aeab6f21aa71f17866d983e564081fad.s3tc.stex", "res://.import/spritesheet.png-aeab6f21aa71f17866d983e564081fad.etc2.stex" ]
 
 [params]
 
