@@ -18,13 +18,11 @@ func _ready():
 	cutscenes = [$CutScenes/Intro]
 
 	point_and_click = $"Point and Click"
-	point_and_click.init($Cole, all_interactive_objects,
-						 cutscenes)
+	point_and_click.init($Cole, all_interactive_objects, cutscenes)
 	
 	transition($Cole, $House/Living)
 
-	$CutScenes/Intro.play()
-	
+	#$CutScenes/Intro.play()
 
 
 func transition(who, to):

@@ -3,15 +3,11 @@ extends Panel
 const ITEM_SIZE = 48
 onready var SLOT_SIZE = $Slots.get_constant("hseparation") + ITEM_SIZE
 
-class Item extends TextureRect:
+class Item extends Interactive:
 	var object
 	var usable = true
-	var description
-	var main_action
-	var secondary_action
-	var oname
-	
-	var ACTIONS = preload("Actions.gd").new()
+	var texture
+	var rect_size = Vector2(ITEM_SIZE, ITEM_SIZE)
 	
 	func _init(_object):
 		object = _object
@@ -21,11 +17,7 @@ class Item extends TextureRect:
 		oname = _object.oname
 		
 		self.texture = load(_object.thumbnail)
-		self.rect_size.x = ITEM_SIZE
-		self.rect_size.y = ITEM_SIZE
-	
-	func examine():
-		return description
+
 
 
 var items = []

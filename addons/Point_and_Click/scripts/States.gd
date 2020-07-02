@@ -30,7 +30,7 @@ class Animate extends State:
 		animation = _animation
 	
 	func run():
-		who.animate(animation)
+		who.play_animation(animation)
 		finished = true
 
 
@@ -45,7 +45,7 @@ class AnimateUntilFinished extends State:
 	
 	func run():
 		blocked = true
-		who.animate(animation)
+		who.play_animation(animation)
 		if not player.is_connected("animation_finished", self, "animation_finished"):
 			player.connect("animation_finished", self, "animation_finished")
 	
@@ -73,6 +73,22 @@ class Finished extends State:
 	
 	func run():
 		who.action_finished()
+		finished = true
+
+
+class InteractWithObject extends State:
+	var object
+	var function
+	
+	func _init(_who, fn, obj):
+		who = _who
+		object = obj
+		function = fn
+		
+	func run():
+		blocked = true
+		# Perform action on object
+		object.call(function, who)
 		finished = true
 
 
@@ -148,7 +164,7 @@ class WalkPath extends State:
 			# There is a path to walk
 			var move_vec = (path[path_idx] - who.transform.origin)
 
-			if move_vec.length() < who.MINIMUM_DISTANCE:
+			if move_vec.length() < who.MINIMUM_WALKABLE_DISTANCE:
 				# too short to walk, move to next segment
 				path_idx += 1
 				run()

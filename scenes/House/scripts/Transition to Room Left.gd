@@ -5,3 +5,7 @@ func _ready():
 	
 	level = get_node("../../../..")
 	to = get_node("../../../Room Left")
+
+func go_to(who):
+	who.walk_to(self)
+	who.interact(self, "transition")

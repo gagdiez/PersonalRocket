@@ -15,17 +15,19 @@ onready var position = self.transform.origin
 onready var thumbnail = 'thumbnails/default.png'
 
 # Name to output
-onready var oname = str(name).to_lower()
+onready var oname = str(name)
 
 # Description of the object
 onready var description = "A good old " + oname
 
 onready var collision = $CollisionShape
 
-# The take function will always make the things desapear, so lets leave it here
-func take(_who):
-	visible = false
-	collision.disabled = true
+func walk_to(who):
+	who.walk_to(self)
 
-func examine(_who):
-	return description
+func examine(who):
+	print("called")
+	return who.say(description)
+
+func use_item(who:Interactive, item):
+	who.say("I don't know how to combine " + self.oname + " with " + item.oname)

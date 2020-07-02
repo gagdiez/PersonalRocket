@@ -22,7 +22,7 @@ var avoid
 var mouse_offset = Vector2(8, 8)
 
 
-func init(_player:BasePlayer, _avoid:Array=[], cutscenes:Array=[]):
+func init(_player:Player, _avoid:Array=[], cutscenes:Array=[]):
 	world = parent.get_world()
 	viewport = parent.get_viewport()
 	camera = viewport.get_camera()
@@ -52,7 +52,7 @@ func get_object_under_mouse(mouse_pos:Vector2):
 	var selection = world.direct_space_state.intersect_ray(from, to, avoid)
 
 	# If the ray hits something, the hitted object is at selection['collider']
-	if not selection.empty():
+	if not selection.empty() and "main_action" in selection['collider']:
 		return selection['collider']
 	else:
 		return
@@ -64,25 +64,25 @@ func point():
 	label.text =  current_action.text
 	
 	if obj_under_mouse:
-		if current_action.type != ACTIONS.COMBINED:
+		if current_action.type != Action.COMBINED:
 			current_action = obj_under_mouse.main_action
 			label.text =  current_action.text
 
 		label.text += " " + obj_under_mouse.oname
 	else:
-		if current_action.type != ACTIONS.COMBINED:
+		if current_action.type != Action.COMBINED:
 			current_action = ACTIONS.none
 
 
 func click():
 	# Function called when a left click is made
 	if obj_under_mouse:
-		if current_action.type == ACTIONS.TO_COMBINE:
+		if current_action.type == Action.TO_COMBINE:
 			# Combine action with this object
 			current_action.combine(obj_under_mouse)
 		else:
-			player.do_action_in_object(current_action,
-											   obj_under_mouse)
+			player.do_action_on_object(current_action,
+									   obj_under_mouse)
 			current_action.uncombine()
 	else:
 		current_action.uncombine()
@@ -91,8 +91,8 @@ func click():
 func secondary_click():
 	# Function called when a right click is made
 	if obj_under_mouse:
-		player.do_action_in_object(obj_under_mouse.secondary_action,
-										   obj_under_mouse)
+		player.do_action_on_object(obj_under_mouse.secondary_action,
+								   obj_under_mouse)
 	current_action.uncombine()
 
 

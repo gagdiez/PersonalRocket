@@ -11,9 +11,11 @@ class PlayerAction:
 	
 	func play():
 		who.connect("player_finished", self, "finished")
-		who.call(action.function, what)
+		who.do_action_on_object(action, what)
+		who.emit_finished_signal()
 	
 	func finished():
+		who.disconnect("player_finished", self, "finished")
 		emit_signal("scene_finished")
 
 
