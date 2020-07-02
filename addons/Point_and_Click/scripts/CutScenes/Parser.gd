@@ -68,22 +68,37 @@ class Parser:
 			printerr(whom, " is not a valid actor, check the dictionary")
 			return []
 		
-		if action in ["take", "walk_to"] and not what in str2obj:
-			printerr(what, " is not a valid object, check the dictionary")
-			return []
-
 		whom = str2obj[whom]
 
-		match action:
-			"say":
-				return SCENES.PlayerAction.new(whom, ACTIONS.say, what)
-			"take":
-				return SCENES.PlayerAction.new(whom, ACTIONS.take, str2obj[what])
-			"walk_to":
-				return SCENES.PlayerAction.new(whom, ACTIONS.walk_to, str2obj[what])
-			_:
-				printerr("Incorrect Action", whom, action, what)
+		if not action in ACTIONS:
+			printerr(action, " is not a valid action, check the Actions class")
+			return []
+		
+		var real_action = ACTIONS.get(action)
+		
+		if real_action.type == Action.IMMEDIATE:
+			return SCENES.PlayerAction.new(whom, real_action, what)
+
+		if real_action.type == Action.TO_COMBINE:
+			var combined_split = what.split(" ")
+			var obj1 = combined_split[0].strip_edges()
+			var obj2 = combined_split[1].strip_edges()
+			
+			if not (obj1 in str2obj) or not (obj2 in str2obj):
+				printerr("Check if ", obj1, " ", obj2, " are in the dictionary")
 				return []
+			
+			var to_combine = Action.new(real_action.function, real_action.text,
+										real_action.type, real_action.nexus)
+			to_combine.combine(str2obj[obj1])
+
+			return SCENES.PlayerAction.new(whom, to_combine, str2obj[obj2])
+		
+		if not what in str2obj:
+			printerr(what, " is not a valid object, check the dictionary")
+			return []
+		else:
+			return SCENES.PlayerAction.new(whom, real_action, str2obj[what])
 
 
 	func identation(line):
