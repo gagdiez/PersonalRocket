@@ -104,6 +104,9 @@ func remove_from_inventory(object):
 func say(text):
 	queue.append(STATES.Say.new(self, text, talk_bubble, talk_bubble_timer))
 
+func talk_to(someone):
+	return
+
 func walk_to(object):
 	var end = navigation.get_closest_point(object.position)
 
