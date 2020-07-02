@@ -7,7 +7,7 @@ var point_and_click
 
 onready var SCENES = preload("Scenes.gd")
 onready var PARSER = preload("Parser.gd").new()
-onready var ACTIONS = preload("Actions.gd").new()
+onready var ACTIONS = preload("../Actions/Actions.gd").new()
 
 # A Cutscene is a list of actions to be played one by one
 var scene_actions = []

@@ -2,7 +2,7 @@ extends Node
 
 class Parser:
 	var SCENES = preload("Scenes.gd").new()
-	var ACTIONS = preload("Actions.gd").new()
+	var ACTIONS = preload("../Actions/Actions.gd").new()
 	
 	var scene
 	var gui

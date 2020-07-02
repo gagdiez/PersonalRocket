@@ -3,7 +3,7 @@ class_name Player
 
 # A player is basically a queue of actions that is constantly running
 const STATES = preload("States.gd")
-onready var queue = preload("Queue.gd").Queue.new()
+var queue = preload("Queue.gd").Queue.new()
 
 # They know where the camera is, where they can walk, and their inventory
 var camera

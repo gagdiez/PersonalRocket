@@ -2,7 +2,7 @@ extends Spatial
 class_name Interactive
 
 # All actions
-var ACTIONS = preload("Actions.gd").new()
+var ACTIONS = preload("../Actions/Actions.gd").new()
 
 # Actions that can be performed on the object
 var main_action = ACTIONS.walk_to

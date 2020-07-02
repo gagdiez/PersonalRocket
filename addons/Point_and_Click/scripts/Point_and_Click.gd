@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var parent = get_parent()
-onready var ACTIONS = preload("Actions.gd").new()
+onready var ACTIONS = preload("Actions/Actions.gd").new()
 
 # This is a point and click game, sounds fair to have all the time
 # in mind where the mouse is, which object is under it, and the

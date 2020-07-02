@@ -1,6 +1,6 @@
 class_name Inventory
 
-var ACTIONS = preload("Actions.gd").new()
+var ACTIONS = preload("../Actions/Actions.gd").new()
 var items = []
 signal item_added
 signal item_removed
