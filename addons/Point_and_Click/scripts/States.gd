@@ -108,6 +108,19 @@ class PerformActionOnObject extends State:
 		finished = true
 
 
+class RemoveFromInventory extends State:
+	var to_remove
+	
+	func _init(_who, object):
+		to_remove = object
+		who = _who
+		
+	func run():
+		blocked = true
+		who.inventory.remove(to_remove)
+		finished = true
+
+
 class Say extends State:
 	var what
 	var label

@@ -1,46 +1,23 @@
-extends Panel
+class_name Inventory
 
-const ITEM_SIZE = 48
-onready var SLOT_SIZE = $Slots.get_constant("hseparation") + ITEM_SIZE
-
-class Item extends Interactive:
-	var object
-	var usable = true
-	var texture
-	var rect_size = Vector2(ITEM_SIZE, ITEM_SIZE)
-	
-	func _init(_object):
-		object = _object
-		description = _object.description
-		main_action = ACTIONS.use_item
-		secondary_action = ACTIONS.examine
-		oname = _object.oname
-		
-		self.texture = load(_object.thumbnail)
-
-
-
+var ACTIONS = preload("Actions.gd").new()
 var items = []
-
-
-func position_contained(position: Vector2):
-	var top = position.y > $Slots.margin_top
-	var bottom = position.y < $Slots.margin_bottom - $Slots.margin_top
-	return top and bottom
-
-
-func get_object_in_position(position: Vector2):
-	
-	var item_idx = int(floor(position.x / SLOT_SIZE))
-	var modulus = fmod(position.x, SLOT_SIZE)
-	
-	if modulus > $Slots.margin_left and item_idx < len(items):
-		return items[item_idx]
-	else:
-		return null
-
+signal item_added
+signal item_removed
 
 func add(obj):
-	var new_item = Item.new(obj)
-	$Slots.add_child(new_item)
-	items.append(new_item)
+	obj.main_action = ACTIONS.use_item
+	obj.secondary_action = ACTIONS.examine
+
+	items.append(obj)
+	emit_signal("item_added", obj)
+	
+func remove(obj):
+	items.erase(obj)
+	emit_signal("item_removed", obj)
+
+func size():
+	return len(items)
+
+func get(idx):
+	return items[idx]

@@ -15,3 +15,9 @@ func take(who):
 func grab(who):
 	visible = false
 	$CollisionShape.disabled = true
+
+func use_item(who, what):
+	who.say("Gonna combine them")
+	
+	if what == get_node("../Pan"):
+		who.remove_from_inventory(what)

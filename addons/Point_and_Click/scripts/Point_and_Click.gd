@@ -36,7 +36,7 @@ func init(_player:Player, _avoid:Array=[], cutscenes:Array=[]):
 	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
 	
 	current_action = ACTIONS.none
-	player.inventory = $Inventory
+	$Inventory.follow(player.inventory)
 	
 	for cs in cutscenes:
 		cs.choice_gui = $Dialog/Choices
@@ -104,8 +104,8 @@ func _process(_delta):
 	mouse_position = viewport.get_mouse_position()
 	
 	# Check if there is an object under the mouse
-	if player.inventory.position_contained(mouse_position):
-		obj_under_mouse = player.inventory.get_object_in_position(mouse_position)
+	if $Inventory.position_contained(mouse_position):
+		obj_under_mouse = $Inventory.get_object_in_position(mouse_position)
 	else:
 		obj_under_mouse = get_object_under_mouse(mouse_position)
 

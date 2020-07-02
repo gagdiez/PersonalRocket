@@ -28,6 +28,7 @@ signal player_finished
 # Godot functions
 func _ready():
 	main_action = ACTIONS.talk_to
+	inventory = Inventory.new()
 
 func _physics_process(_delta):
 	# Move player's bubble above they head
@@ -96,6 +97,9 @@ func interrupt():
 
 func interact(object, function):
 	queue.append(STATES.InteractWithObject.new(self, function, object))
+
+func remove_from_inventory(object):
+	queue.append(STATES.RemoveFromInventory.new(self, object))
 
 func say(text):
 	queue.append(STATES.Say.new(self, text, talk_bubble, talk_bubble_timer))
