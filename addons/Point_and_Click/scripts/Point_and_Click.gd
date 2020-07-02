@@ -6,27 +6,22 @@ onready var ACTIONS = preload("Actions.gd").new()
 # This is a point and click game, sounds fair to have all the time
 # in mind where the mouse is, which object is under it, and the
 # current action (for combining actions)
-var current_action
-var player
-var label
-var mouse_position
+var current_action:Action
+var player:Player
+var label:RichTextLabel
+var mouse_position:Vector2
 var obj_under_mouse
+var avoid:Array
 
-# Other variables related to the point and click
-var world
-var viewport
-var camera
-var avoid
+# Flag to be active
+var active:bool = true
+
 
 # For showing the label of objects under mouse
 var mouse_offset = Vector2(8, 8)
 
 
 func init(_player:Player, _avoid:Array=[], cutscenes:Array=[]):
-	world = parent.get_world()
-	viewport = parent.get_viewport()
-	camera = viewport.get_camera()
-	
 	avoid = _avoid
 	player = _player
 	
@@ -34,11 +29,13 @@ func init(_player:Player, _avoid:Array=[], cutscenes:Array=[]):
 	
 	label = $"Cursor Label"
 	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
+	label.text = ""
 	
 	current_action = ACTIONS.none
 	$Inventory.follow(player.inventory)
 	
 	for cs in cutscenes:
+		cs.point_and_click = self
 		cs.choice_gui = $Dialog/Choices
 		cs.init()
 
@@ -47,9 +44,9 @@ func get_object_under_mouse(mouse_pos:Vector2):
 	# Function to retrieve which object is under the mouse...
 	var RAY_LENGTH = 50
 	
-	var from = camera.project_ray_origin(mouse_pos)
-	var to = from + camera.project_ray_normal(mouse_pos) * RAY_LENGTH
-	var selection = world.direct_space_state.intersect_ray(from, to, avoid)
+	var from = player.camera.project_ray_origin(mouse_pos)
+	var to = from + player.camera.project_ray_normal(mouse_pos) * RAY_LENGTH
+	var selection = player.get_world().direct_space_state.intersect_ray(from, to, avoid)
 
 	# If the ray hits something, the hitted object is at selection['collider']
 	if not selection.empty() and "main_action" in selection['collider']:
@@ -85,6 +82,7 @@ func click():
 									   obj_under_mouse)
 			current_action.uncombine()
 	else:
+		player.interrupt()
 		current_action.uncombine()
 
 
@@ -97,11 +95,11 @@ func secondary_click():
 
 
 func _process(_delta):
-	viewport = parent.get_viewport()
-	camera = viewport.get_camera()
-	
+	if not active:
+		return
+
 	# Get mouse position
-	mouse_position = viewport.get_mouse_position()
+	mouse_position = player.get_viewport().get_mouse_position()
 	
 	# Check if there is an object under the mouse
 	if $Inventory.position_contained(mouse_position):

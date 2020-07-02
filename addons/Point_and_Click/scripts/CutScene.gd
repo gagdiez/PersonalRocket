@@ -3,6 +3,7 @@ class_name CutScene
 
 # To be set before running init
 var choice_gui
+var point_and_click
 
 onready var SCENES = preload("Scenes.gd")
 onready var PARSER = preload("Parser.gd").new()
@@ -19,6 +20,8 @@ func init():
 	scene_actions = parser.parse_file(scene_file)
 
 func play():
+	point_and_click.active = false
+	
 	if current_action:
 		current_action.disconnect("scene_finished", self, "play")
 		
@@ -26,3 +29,5 @@ func play():
 		current_action = scene_actions.pop_front()
 		current_action.connect("scene_finished", self, "play")
 		current_action.play()
+	else:
+		point_and_click.active = true
