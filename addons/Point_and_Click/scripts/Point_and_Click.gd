@@ -46,11 +46,11 @@ func get_object_under_mouse(mouse_pos:Vector2):
 	
 	var from = player.camera.project_ray_origin(mouse_pos)
 	var to = from + player.camera.project_ray_normal(mouse_pos) * RAY_LENGTH
-	var selection = player.get_world().direct_space_state.intersect_ray(from, to, avoid)
+	var ray = player.get_world().direct_space_state.intersect_ray(from, to, avoid)
 
 	# If the ray hits something, the hitted object is at selection['collider']
-	if not selection.empty() and "main_action" in selection['collider']:
-		return selection['collider']
+	if ray and ray['collider'] is Interactive and ray['collider'].interactive:
+		return ray['collider']
 	else:
 		return
 

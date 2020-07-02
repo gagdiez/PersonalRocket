@@ -14,7 +14,7 @@ func take(who):
 
 func grab(who):
 	visible = false
-	$CollisionShape.disabled = true
+	interactive = false
 
 func use_item(who, what):
 	if what == get_node("../Pan"):

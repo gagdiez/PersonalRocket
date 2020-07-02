@@ -20,7 +20,8 @@ onready var oname = str(name)
 # Description of the object
 onready var description = "A good old " + oname
 
-onready var collision = $CollisionShape
+# If interactive, the point and click see's it
+onready var interactive = true
 
 func examine(who):
 	return who.say(description)

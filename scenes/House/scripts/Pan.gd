@@ -14,4 +14,4 @@ func take(who):
 
 func grab(who):
 	visible = false
-	$CollisionShape.disabled = true
+	interactive = false
