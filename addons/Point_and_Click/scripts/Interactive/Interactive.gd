@@ -12,7 +12,7 @@ var secondary_action = ACTIONS.examine
 onready var position = self.transform.origin
 
 # Thumbnail for takeable items
-onready var thumbnail = 'thumbnails/default.png'
+onready var thumbnail = "res://addons/Point_and_Click/scripts/Interactive/default.png"
 
 # Name to output
 onready var oname = str(name)
