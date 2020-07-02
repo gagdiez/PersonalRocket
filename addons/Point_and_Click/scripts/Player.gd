@@ -49,7 +49,6 @@ func do_action_on_object(action:Action, what):
 		return
 
 	self.interrupt()
-	self.play_animation("idle")
 
 	match action.type:
 		Action.IMMEDIATE:
@@ -94,6 +93,7 @@ func face_object(object):
 
 func interrupt():
 	queue.clear()
+	play_animation("idle")
 
 func interact(object, function):
 	queue.append(STATES.InteractWithObject.new(self, function, object))

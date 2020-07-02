@@ -22,11 +22,7 @@ onready var description = "A good old " + oname
 
 onready var collision = $CollisionShape
 
-func walk_to(who):
-	who.walk_to(self)
-
 func examine(who):
-	print("called")
 	return who.say(description)
 
 func use_item(who:Interactive, item):

@@ -18,7 +18,7 @@ tracks/0/keys = {
 "values": [ 8 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "lower_hand"
 length = 0.375
 step = 0.125
@@ -35,7 +35,7 @@ tracks/0/keys = {
 "values": [ 10, 9, 8 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=3]
 resource_name = "raise_hand"
 length = 0.25
 step = 0.125
@@ -103,8 +103,8 @@ one_shot = true
 [node name="Animations" type="AnimationPlayer" parent="."]
 autoplay = "idle"
 anims/idle = SubResource( 1 )
-anims/lower_hand = SubResource( 3 )
-anims/raise_hand = SubResource( 7 )
+anims/lower_hand = SubResource( 2 )
+anims/raise_hand = SubResource( 3 )
 anims/walk = SubResource( 4 )
 
 [node name="Sprite" type="Sprite3D" parent="."]
