@@ -1,6 +1,7 @@
 class_name Action
 
 const IMMEDIATE = 'immediate'
+const INTERACTIVE = 'interactive'
 const TO_COMBINE = 'to_combine'
 const COMBINED = 'combined'
 
