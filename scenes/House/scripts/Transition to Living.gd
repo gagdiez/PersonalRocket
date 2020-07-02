@@ -7,5 +7,5 @@ func _ready():
 	to = get_node("../../../Living")
 
 func go_to(who):
-	who.walk_to(self)
+	who.approach(self)
 	who.interact(self, "transition")

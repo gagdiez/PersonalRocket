@@ -5,7 +5,7 @@ func _ready():
 	thumbnail = 'thumbnails/cup.png'
 
 func take(who):
-	who.walk_to(self)
+	who.approach(self)
 	who.face_object(self)
 	who.animate_until_finished("raise_hand")
 	who.interact(self, 'grab')
@@ -20,3 +20,5 @@ func use_item(who, what):
 	if what == get_node("../Pan"):
 		who.say("Gonna combine them")
 		who.remove_from_inventory(what)
+	else:
+		who.say("I don't know how to combine " + self.oname + " with " + what.oname)

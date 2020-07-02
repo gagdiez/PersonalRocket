@@ -107,7 +107,7 @@ func say(text):
 func talk_to(someone):
 	return
 
-func walk_to(object):
+func approach(object):
 	var end = navigation.get_closest_point(object.position)
 
 	if (end - transform.origin).length() > MINIMUM_WALKABLE_DISTANCE:

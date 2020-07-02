@@ -26,7 +26,7 @@ var use = Action.new("use", "Use", Action.INTERACTIVE)
 
 # IMMEDIATE Actions
 var say = Action.new("say", "", Action.IMMEDIATE)
-var walk_to = Action.new("walk_to", " ", Action.IMMEDIATE)
+var walk_to = Action.new("walk_to", " ", Action.INTERACTIVE)
 
 # TO_COMBINE Actions
 var use_item = Action.new("use_item", "Use", Action.TO_COMBINE, 'with')

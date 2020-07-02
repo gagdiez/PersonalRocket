@@ -4,7 +4,7 @@ func _ready():
 	main_action = ACTIONS.use
 
 func use(who):
-	who.walk_to(self)
+	who.approach(self)
 	who.face_object(self)
 	who.animate_until_finished("raise_hand")
 	who.interact(self, "switch")

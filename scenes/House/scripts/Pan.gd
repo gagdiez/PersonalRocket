@@ -6,7 +6,7 @@ func _ready():
 	thumbnail = 'thumbnails/pan.png'
 
 func take(who):
-	who.walk_to(self)
+	who.approach(self)
 	who.animate_until_finished("raise_hand")
 	who.interact(self, 'grab')
 	who.add_to_inventory(self)
