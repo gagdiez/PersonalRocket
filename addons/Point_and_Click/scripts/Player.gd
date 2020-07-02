@@ -1,27 +1,64 @@
-extends BasePlayer
+extends Interactive
 class_name Player
 
+# A player is basically a queue of actions that is constantly running
+const STATES = preload("States.gd")
+onready var queue = preload("Queue.gd").Queue.new()
+
+# They know where the camera is, where they can walk, and their inventory
+var camera
+var inventory
+var navigation
+
+# Their NODE has an animation player, a sprite, and a talk bubble
 var animation_player
 var talk_bubble
 var talk_bubble_timer
 var talk_bubble_offset
+var sprite
+
+# They have a speed, and they don't move if the destination is close
 var SPEED = 5
-var MINIMUM_DISTANCE = 0.5
+var MINIMUM_WALKABLE_DISTANCE = 0.5
+
+# They can signal after finising actions
+signal player_finished
+
+
+# Godot functions
+func _ready():
+	main_action = ACTIONS.talk_to
 
 func _physics_process(_delta):
 	# Move player's bubble above they head
 	talk_bubble.rect_position = camera.unproject_position(
 			transform.origin + talk_bubble_offset
 	)
-	
-	# Process the queue
-	self.process_queue()
 
+	# Process the queue
+	var current_action = queue.current()
+
+	if current_action:
+		current_action.run()
+
+
+# Function called by the point and click system when we click on an object
+func do_action_on_object(action:Action, what):
+	if not action.function:
+		return
+
+	self.interrupt()
+	self.play_animation("idle")
+
+	match action.type:
+		Action.IMMEDIATE:
+			self.call(action.function, what)
+		Action.INTERACTIVE:
+			what.call(action.function, self)
+		Action.COMBINED:
+			what.call(action.function, self, action.object)
 
 # Functions to modify the graphics
-func animate(animation):
-	$Animations.play(animation)
-
 func face_direction(direction):
 	var my_pos = camera.unproject_position(transform.origin)
 	var dir = camera.unproject_position(transform.origin + direction)
@@ -31,65 +68,42 @@ func face_direction(direction):
 	else:
 		$Sprite.scale.x = 1
 
+func play_animation(animation):
+	animation_player.play(animation)
+
 
 # Functions to populate the queue in response to clicks in objects
-func examine(object):
+func action_finished():
+	emit_signal("player_finished")
+
+func add_to_inventory(object):
+	queue.append(STATES.AddToInventory.new(self, object))
+
+func animate(animation):
+	queue.append(STATES.Animate.new(self, animation))
+
+func animate_until_finished(animation):
+	queue.append(STATES.AnimateUntilFinished.new(self, animation))
+
+func emit_finished_signal():
+	queue.append(STATES.Finished.new(self))
+
+func face_object(object):
+	queue.append(STATES.FaceObject.new(self, object))
+
+func interrupt():
 	queue.clear()
-	queue.append(STATES.Animate.new(self, "idle"))
-	queue.append(STATES.FaceObject.new(self, object))
-	say(object.call(ACTIONS.examine.function, self))
 
-func get_close_and_perform_action(action, object):
-	# First of all, walk to the object
-	walk_to(object, false)
-	queue.append(STATES.FaceObject.new(self, object))
-	queue.append(STATES.AnimateUntilFinished.new(self, 'take_raise'))
-	queue.append(STATES.PerformActionOnObject.new(self, action, object))
-	queue.append(STATES.AnimateUntilFinished.new(self, 'take_down'))
-	queue.append(STATES.Finished.new(self))
-
-func go_to(object):
-	# Transition between areas, walk to the point we need, and inform the obj
-	walk_to(object, false)
-	queue.append(STATES.PerformActionOnObject.new(self, ACTIONS.go_to, object))
-	queue.append(STATES.Finished.new(self))
-
-func open(object):
-	get_close_and_perform_action(ACTIONS.open, object)
-
-func read(object):
-	walk_to(object, false)
-	queue.append(STATES.FaceObject.new(self, object))
-	say(object.call(ACTIONS.read.function, self))
+func interact(object, function):
+	queue.append(STATES.InteractWithObject.new(self, function, object))
 
 func say(text):
 	queue.append(STATES.Say.new(self, text, talk_bubble, talk_bubble_timer))
-	queue.append(STATES.Finished.new(self))
 
-func take(object):
-	walk_to(object, false)
-	queue.append(STATES.FaceObject.new(self, object))
-	queue.append(STATES.AnimateUntilFinished.new(self, 'take_raise'))
-	queue.append(STATES.PerformActionOnObject.new(self, ACTIONS.take, object))
-	queue.append(STATES.AddToInventory.new(self, object))
-	queue.append(STATES.AnimateUntilFinished.new(self, 'take_down'))
-	queue.append(STATES.Finished.new(self))
-
-func talk_to(who):
-	walk_to(who)
-
-func use(object):
-	get_close_and_perform_action(ACTIONS.use, object)
-
-func use_item(what, where):
-	what.use(where)
-
-func walk_to(object, emit_signal=true):
-	queue.clear()
-	
+func walk_to(object):
 	var end = navigation.get_closest_point(object.position)
 
-	if (end - transform.origin).length() > MINIMUM_DISTANCE:
+	if (end - transform.origin).length() > MINIMUM_WALKABLE_DISTANCE:
 		# We actually need to walk
 		var begin = navigation.get_closest_point(transform.origin)
 		var path = navigation.get_simple_path(begin, end, true)
@@ -97,6 +111,3 @@ func walk_to(object, emit_signal=true):
 		queue.append(STATES.Animate.new(self, "walk"))
 		queue.append(STATES.WalkPath.new(self, path))
 		queue.append(STATES.Animate.new(self, "idle"))
-		
-		if emit_signal:
-			queue.append(STATES.Finished.new(self))
