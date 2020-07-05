@@ -18,27 +18,25 @@ func _ready():
 	cutscenes = [$CutScenes/Intro]
 
 	point_and_click = $"Point and Click"
-	point_and_click.init($Cole, all_interactive_objects, cutscenes)
+	point_and_click.init($Cole, cutscenes)
 	
 	transition($Cole, $House/Living)
 
-	$CutScenes/Intro.play()
+	#$CutScenes/Intro.play()
 
 
 func transition(who, to):
 	# the objects from where we come are not interactive anymore
-	var avoid = []
-	
 	var to_objects = to.get_node("Interactive").get_children()
 	
 	for obj in all_interactive_objects:
 		if not obj in to_objects:
-			avoid.append(obj)
+			obj.interactive = false
+		else:
+			obj.interactive = true
 	
 	var to_camera = to.get_node("Camera")
 	to_camera.current = true
-	
-	point_and_click.avoid = avoid
 	
 	who.camera = to_camera
 	who.rotation_degrees.y = to_camera.rotation_degrees.y
