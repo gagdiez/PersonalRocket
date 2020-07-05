@@ -5,7 +5,6 @@
 [ext_resource path="res://addons/Point_and_Click/scripts/CutScenes/CutScene.gd" type="Script" id=3]
 [ext_resource path="res://addons/Point_and_Click/scripts/CutScenes/Dialog.gd" type="Script" id=4]
 
-
 [node name="PointClick" type="Node2D"]
 script = ExtResource( 2 )
 
