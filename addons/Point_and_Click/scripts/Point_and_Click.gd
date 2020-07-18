@@ -44,6 +44,15 @@ func init(_player:Player, cutscenes:Array=[]):
 		cs.init()
 
 
+func deactivate():
+	active = false
+	label.text = ""
+
+
+func activate():
+	active = true
+	
+
 func get_object_under_mouse(mouse_pos:Vector2, RAY_LENGTH=50):
 	# Function to retrieve which object is under the mouse...
 	var from = player.camera.project_ray_origin(mouse_pos)

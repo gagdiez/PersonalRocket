@@ -12,3 +12,6 @@ func _ready():
 	talk_bubble_offset = Vector3(-.6, 9.5, 0)
 
 	position = self.transform.origin + Vector3(5, 0, 0)
+
+func talk_to(who):
+	$"../CutScenes/Intro".play()

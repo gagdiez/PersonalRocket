@@ -22,7 +22,7 @@ func _ready():
 	
 	transition($Cole, $House/Living)
 
-	#$CutScenes/Intro.play()
+	$CutScenes/Intro.play()
 
 
 func transition(who, to):
