@@ -18,7 +18,6 @@ choice:
 	option: My mirror !{cole.charisma} >= 3
 		cole say: My mirror image?
 		shadow_cole say: Indeed I am
-		
 
 	return: Bye
 		cole say: I will come back later

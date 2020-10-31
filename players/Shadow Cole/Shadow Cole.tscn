@@ -88,9 +88,6 @@ tracks/0/keys = {
 [sub_resource type="SpatialMaterial" id=6]
 flags_transparent = true
 flags_vertex_lighting = true
-flags_albedo_tex_force_srgb = true
-vertex_color_use_as_albedo = true
-vertex_color_is_srgb = true
 params_cull_mode = 2
 params_depth_draw_mode = 3
 
@@ -128,9 +125,6 @@ anims/walk = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.39771, 0.0795898 )
 material_override = SubResource( 6 )
 use_in_baked_light = true
-transparent = false
-double_sided = false
-alpha_cut = 2
 texture = ExtResource( 2 )
 vframes = 2
 hframes = 8

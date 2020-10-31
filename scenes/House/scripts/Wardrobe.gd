@@ -19,7 +19,7 @@ func open(who):
 
 
 func slide_door(who):
-	var end = Vector3(transform.origin.x, transform.origin.y, -23.824)
+	var end = Vector3(transform.origin.x, transform.origin.y, transform.origin.z-2.69)
 
 	tween.interpolate_property(self, "translation", self.transform.origin, end,
 							   1, tween.TRANS_CUBIC, tween.EASE_IN_OUT)
