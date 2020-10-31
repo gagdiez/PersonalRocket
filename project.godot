@@ -56,7 +56,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Optimal Personal Godot"
+config/name="Personal Godot"
 run/main_scene="res://scenes/House/House.tscn"
 config/icon="res://icon.png"
 
