@@ -9,7 +9,7 @@ func _ready():
 	# For a player, we need to indicate its "Animation Player"
 	animation_player = $Animations
 
-	# Where is its talk bubble
+	# Its talk bubble
 	talk_bubble = $"Talk Bubble"
 	talk_bubble.visible = false
 
@@ -17,3 +17,7 @@ func _ready():
 
 	# And where to place it
 	talk_bubble_offset = Vector3(-.6, 9.5, 0)
+
+# A little function to test that our cutscene system is working
+func test_function(p1, p2, p3):
+	print("Cole is printing: ", p1, " ", p2, " ", p3)

@@ -12,6 +12,6 @@ func take(who):
 	who.add_to_inventory(self)
 	who.animate_until_finished("lower_hand")
 
-func grab(who):
+func grab():
 	visible = false
 	interactive = false

@@ -8,4 +8,4 @@ func _ready():
 
 func go_to(who):
 	who.approach(self)
-	who.interact(self, "transition")
+	who.interact(self, "transition", [who])

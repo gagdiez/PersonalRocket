@@ -2,8 +2,9 @@
 
 [ext_resource path="res://addons/Point_and_Click/scripts/InventoryGUI.gd" type="Script" id=1]
 [ext_resource path="res://addons/Point_and_Click/scripts/Point_and_Click.gd" type="Script" id=2]
-[ext_resource path="res://addons/Point_and_Click/scripts/CutScenes/CutScene.gd" type="Script" id=3]
 [ext_resource path="res://addons/Point_and_Click/scripts/CutScenes/Dialog.gd" type="Script" id=4]
+
+[sub_resource type="GDScript" id=1]
 
 [node name="PointClick" type="Node2D"]
 script = ExtResource( 2 )
@@ -47,7 +48,7 @@ margin_left = 1.0
 margin_top = 513.0
 margin_right = 1024.0
 margin_bottom = 600.0
-script = ExtResource( 3 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

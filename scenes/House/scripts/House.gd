@@ -1,8 +1,6 @@
 extends Spatial
 
-var point_and_click
 var all_interactive_objects
-var cutscenes
 
 func _ready():
 	$Cole.navigation = $House/Navigation
@@ -15,14 +13,17 @@ func _ready():
 	all_interactive_objects = $"House/Room Left/Interactive".get_children()
 	all_interactive_objects += $"House/Living/Interactive".get_children()
 
-	cutscenes = [$CutScenes/Intro]
-
-	point_and_click = $"Point and Click"
-	point_and_click.init($Cole, cutscenes)
-	
 	transition($Cole, $House/Living)
 
-	#$CutScenes/Intro.play()
+	var str2obj = {"cole": $Cole, "shadow_cole": $"Shadow Cole",
+				   "cup": $"House/Living/Interactive/Cup",
+				   "room": $"House/Living/Interactive/Room",
+				   "wardrobe": $"House/Room Left/Interactive/Wardrobe",
+				   "pan": $"House/Living/Interactive/Pan"}
+
+	$PAC.init($Cole, str2obj)
+	
+	$PAC.play_scene("res://scenes/House/cut_scenes/Intro.txt")
 
 
 func transition(who, to):

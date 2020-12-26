@@ -2,29 +2,28 @@ cole walk_to: shadow_cole
 cole say: Who are you?
 shadow_cole say: Who do you think I am?
 
-choice:
+choice: Who do you think I am?
 	option: A ghost?
 		cole say: Maybe...
-		
-		choice:
-		
+
+		choice: Maybe...
 			option: A ghost
 				cole say: Are you a ghost from my past?
 				shadow_cole say: No, I am not
-						
-			return: No idea
+			option: No idea
 				cole say: I don't know
+				finish
 
-	option: My mirror !{cole.charisma} >= 3
+	option: My mirror
 		cole say: My mirror image?
 		shadow_cole say: Indeed I am
 
-	return: Bye
+	option: Bye
 		cole say: I will come back later
-        
+		finish
+
 cole say: This is an example of an intro
 shadow_cole say: Everyone can talk
 cole say: I can also interact with the environment
 
 cole take: cup
-

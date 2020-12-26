@@ -33,7 +33,7 @@ func _ready():
 func _physics_process(_delta):
 	# Move player's bubble above they head
 	talk_bubble.rect_position = camera.unproject_position(
-			transform.origin + talk_bubble_offset
+		transform.origin + talk_bubble_offset
 	)
 
 	# Process the queue
@@ -41,22 +41,6 @@ func _physics_process(_delta):
 
 	if current_action:
 		current_action.run()
-
-
-# Function called by the point and click system when we click on an object
-func do_action_on_object(action:Action, what):
-	if not action.function:
-		return
-
-	self.interrupt()
-
-	match action.type:
-		Action.IMMEDIATE:
-			self.call(action.function, what)
-		Action.INTERACTIVE:
-			what.call(action.function, self)
-		Action.COMBINED:
-			what.call(action.function, self, action.object)
 
 # Functions to modify the graphics
 func face_direction(direction):
@@ -85,6 +69,9 @@ func animate(animation):
 func animate_until_finished(animation):
 	queue.append(STATES.AnimateUntilFinished.new(self, animation))
 
+func internal(fc, params):
+	queue.append(STATES.CallFunction.new(self, fc, params))
+
 func emit_finished_signal():
 	queue.append(STATES.Finished.new(self))
 
@@ -95,8 +82,11 @@ func interrupt():
 	queue.clear()
 	play_animation("idle")
 
-func interact(object, function):
-	queue.append(STATES.InteractWithObject.new(self, function, object))
+func interact(object, function, params=[]):
+	if not params is Array:
+		printerr("parameters should be an array")
+		return
+	queue.append(STATES.InteractWithObject.new(object, function, params))
 
 func remove_from_inventory(object):
 	queue.append(STATES.RemoveFromInventory.new(self, object))
@@ -105,7 +95,8 @@ func say(text):
 	queue.append(STATES.Say.new(self, text, talk_bubble, talk_bubble_timer))
 
 func talk_to(someone):
-	return
+	var to_say = someone.name + " is trying to talk with me"
+	queue.append(STATES.Say.new(self, to_say, talk_bubble, talk_bubble_timer))
 
 func approach(object):
 	var end = navigation.get_closest_point(object.position)

@@ -10,6 +10,6 @@ func use(who):
 	who.interact(self, "switch")
 	who.animate_until_finished("lower_hand")
 
-func switch(who):
+func switch():
 	$OmniLight.visible = not $OmniLight.visible
 	$light_glow.visible = not $light_glow.visible

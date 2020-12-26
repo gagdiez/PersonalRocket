@@ -14,4 +14,4 @@ func _ready():
 	position = self.transform.origin + Vector3(5, 0, 0)
 
 func talk_to(who):
-	$"../CutScenes/Intro".play()
+	say("Hi " + who.name)

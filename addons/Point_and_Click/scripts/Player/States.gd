@@ -4,7 +4,9 @@ class State:
 	var who
 
 	func run():
-		pass
+		printerr("ERROR: Run method not implemented")
+		push_error("ERROR: Run method not implemented")
+		finished = true
 
 
 # PREMADE STATES
@@ -51,7 +53,25 @@ class AnimateUntilFinished extends State:
 	
 	func animation_finished(_arg):
 		finished = true
-		player.disconnect("animation_finished", self, "finished")
+		player.disconnect("animation_finished", self, "animation_finished")
+
+
+class CallFunction extends State:
+	var fc
+	var params
+	
+	func _init(_who, _fc, _params):
+		who = _who
+		fc = _fc
+		params = _params
+	
+	func run():
+		if who.has_method(fc):
+			who.callv(fc, params)
+		else:
+			printerr(who.name + " does not implement the method " + fc)
+			push_error(who.name + " does not implement the method " + fc)
+		finished = true
 
 
 class FaceObject extends State:
@@ -79,16 +99,16 @@ class Finished extends State:
 class InteractWithObject extends State:
 	var object
 	var function
+	var params
 	
-	func _init(_who, fn, obj):
-		who = _who
+	func _init(obj, fn, _params=[]):
 		object = obj
 		function = fn
+		params = _params
 		
 	func run():
-		blocked = true
 		# Perform action on object
-		object.call(function, who)
+		object.callv(function, params)
 		finished = true
 
 
@@ -147,6 +167,25 @@ class Say extends State:
 	func quiet():
 		timer.disconnect("timeout", self, "quiet")
 		label.visible = false
+		finished = true
+
+
+class SetVariable extends State:
+	var whom
+	var what
+	var value
+	
+	func _init(_whom, _what, _value):
+		whom = _whom
+		what = _what
+		value = _value
+	
+	func run():
+		if what in whom:
+			whom.set(what, value)
+		else:
+			printerr("Variable non existent: ", whom.name, ".", what)
+			push_error("Variable non existent: " + whom.name + " " + what)
 		finished = true
 
 

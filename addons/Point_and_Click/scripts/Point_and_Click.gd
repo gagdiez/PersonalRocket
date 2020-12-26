@@ -5,19 +5,24 @@ extends Node2D
 
 # But if you are curious on how the whole thing works, then go ahead and check
 # the code! It's quite cool actually - Signed: The person who wrote the code
-
-onready var parent = get_parent()
 onready var ACTIONS = preload("Actions/Actions.gd").new()
+onready var gui = $Dialog/Choices
 
 # This is a point and click game, sounds fair to have all the time
-# in mind where the mouse is, which object is under it, and the
-# current action (for combining actions)
+# in mind where the mouse is, which object is under it, who is the
+# main player and the current action (for combining actions)
 var current_action:Action
 var player:Player
 var label:RichTextLabel
 var mouse_position:Vector2
-var obj_under_mouse
-var avoid = []
+var obj_under_mouse: Object
+
+# During the game there will be objects you want the P&C to avoid. For example,
+# if you are in one room, you want the system to ignore objects in another room
+var avoid:Array = []
+
+# For cutscenes we need to be able to translate text into objects in the game
+var str2obj: Dictionary
 
 # Flag to be active
 var active:bool = true
@@ -25,36 +30,32 @@ var active:bool = true
 # For showing the label of objects under mouse
 var mouse_offset = Vector2(8, 8)
 
+# Functions
 
-func init(_player:Player, cutscenes:Array=[]):
+func init(_player:Player, _str2obj=null):
+	# This function needs to be called by the user to set the player
 	player = _player
-	
-	var base_dir = self.get_script().get_path().get_base_dir()
-	
-	label = $"Cursor Label"
-	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
-	label.text = ""
-	
-	current_action = ACTIONS.none
 	$Inventory.follow(player.inventory)
 	
-	for cs in cutscenes:
-		cs.point_and_click = self
-		cs.choice_gui = $Dialog/Choices
-		cs.init()
+	str2obj = _str2obj
 
-
-func deactivate():
-	active = false
-	label.text = ""
-
-
-func activate():
-	active = true
-	
+func click():
+	# Function called when a left click is made
+	if obj_under_mouse:
+		if current_action.type == Action.TO_COMBINE:
+			# Combine action with this object
+			current_action.combine(obj_under_mouse)
+		else:
+			current_action.execute(player, obj_under_mouse)
+			current_action.uncombine()
+	else:
+		player.interrupt()
+		current_action.uncombine()
 
 func get_object_under_mouse(mouse_pos:Vector2, RAY_LENGTH=50):
-	# Function to retrieve which object is under the mouse...
+	# Function to retrieve which object is under the mouse
+	
+	# Create a ray from the camera pointing towards the mouse
 	var from = player.camera.project_ray_origin(mouse_pos)
 	var to = from + player.camera.project_ray_normal(mouse_pos) * RAY_LENGTH
 	var ray = player.get_world().direct_space_state.intersect_ray(from, to, avoid)
@@ -70,48 +71,31 @@ func get_object_under_mouse(mouse_pos:Vector2, RAY_LENGTH=50):
 	avoid = []
 	return
 
+func play_scene(scene_file):
+	# Function to play a cutscene
+	var cut_scene_player = CutScene.new(scene_file, str2obj, self)
+	cut_scene_player.play()
+
 func point():
 	# On every single frame we check what's under the mouse
 	label.rect_position = mouse_position + mouse_offset
-	label.text =  current_action.text
+	label.text = current_action.text
 	
 	if obj_under_mouse:
 		if current_action.type != Action.COMBINED:
 			current_action = obj_under_mouse.main_action
-			label.text =  current_action.text
-
+			label.text = current_action.text
+		elif obj_under_mouse == current_action.combine_object:
+			return
+			
 		label.text += " " + obj_under_mouse.oname
 	else:
 		if current_action.type != Action.COMBINED:
 			current_action = ACTIONS.none
 
-
-func click():
-	# Function called when a left click is made
-	if obj_under_mouse:
-		if current_action.type == Action.TO_COMBINE:
-			# Combine action with this object
-			current_action.combine(obj_under_mouse)
-		else:
-			player.do_action_on_object(current_action,
-									   obj_under_mouse)
-			current_action.uncombine()
-	else:
-		player.interrupt()
-		current_action.uncombine()
-
-
-func secondary_click():
-	# Function called when a right click is made
-	if obj_under_mouse:
-		player.do_action_on_object(obj_under_mouse.secondary_action,
-								   obj_under_mouse)
-	current_action.uncombine()
-
-
 func _process(_delta):
-	if not active:
-		return
+	# On every frame
+	if not active: return
 
 	# Get mouse position
 	mouse_position = player.get_viewport().get_mouse_position()
@@ -131,3 +115,17 @@ func _process(_delta):
 
 	if Input.is_action_just_released("ui_secondary_click"):
 		secondary_click()
+
+func _ready():
+	# On ready set the current action to none, and clear the label
+	label = $"Cursor Label"
+	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
+	label.text = ""
+
+	current_action = ACTIONS.none
+
+func secondary_click():
+	# Function called when a right click is made
+	if obj_under_mouse:
+		obj_under_mouse.secondary_action.execute(player, obj_under_mouse)
+	current_action.uncombine()

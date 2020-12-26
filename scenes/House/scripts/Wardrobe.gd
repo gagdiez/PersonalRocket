@@ -18,7 +18,7 @@ func open(who):
 	who.animate_until_finished("lower_hand")
 
 
-func slide_door(who):
+func slide_door():
 	var end = Vector3(transform.origin.x, transform.origin.y, transform.origin.z-2.69)
 
 	tween.interpolate_property(self, "translation", self.transform.origin, end,
