@@ -14,4 +14,8 @@ func _ready():
 	position = self.transform.origin + Vector3(5, 0, 0)
 
 func talk_to(who):
+	who.approach(self)
+	who.emit_message("arrived")
+	
+	wait_on_player(who, "arrived")
 	say("Hi " + who.name)

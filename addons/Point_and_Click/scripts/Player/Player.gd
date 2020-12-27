@@ -23,7 +23,7 @@ var MINIMUM_WALKABLE_DISTANCE = 0.5
 
 # They can signal after finising actions
 signal player_finished
-
+signal message(signal_name)
 
 # Godot functions
 func _ready():
@@ -55,11 +55,10 @@ func face_direction(direction):
 func play_animation(animation):
 	animation_player.play(animation)
 
-
-# Functions to populate the queue in response to clicks in objects
-func action_finished():
+func player_finished():
 	emit_signal("player_finished")
 
+# Functions to populate the queue in response to clicks in objects
 func add_to_inventory(object):
 	queue.append(STATES.AddToInventory.new(self, object))
 
@@ -72,6 +71,9 @@ func animate_until_finished(animation):
 func internal(fc, params):
 	queue.append(STATES.CallFunction.new(self, fc, params))
 
+func emit_message(signal_message):
+	queue.append(STATES.Emit.new(self, signal_message))
+
 func emit_finished_signal():
 	queue.append(STATES.Finished.new(self))
 
@@ -79,14 +81,14 @@ func face_object(object):
 	queue.append(STATES.FaceObject.new(self, object))
 
 func interrupt():
-	queue.clear()
-	play_animation("idle")
+	if queue.clear():
+		play_animation("idle")
 
 func interact(object, function, params=[]):
 	if not params is Array:
 		printerr("parameters should be an array")
 		return
-	queue.append(STATES.InteractWithObject.new(object, function, params))
+	queue.append(STATES.InteractWithObject.new(self, object, function, params))
 
 func remove_from_inventory(object):
 	queue.append(STATES.RemoveFromInventory.new(self, object))
@@ -97,6 +99,9 @@ func say(text):
 func talk_to(someone):
 	var to_say = someone.name + " is trying to talk with me"
 	queue.append(STATES.Say.new(self, to_say, talk_bubble, talk_bubble_timer))
+
+func wait_on_player(who:Player, message:String):
+	queue.append(STATES.WaitOnPlayer.new(self, who, message))
 
 func approach(object):
 	var end = navigation.get_closest_point(object.position)

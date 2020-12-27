@@ -23,3 +23,5 @@ class Queue:
 	func clear():
 		if queue and not queue[0].blocked:
 			queue = []
+			return true
+		return false

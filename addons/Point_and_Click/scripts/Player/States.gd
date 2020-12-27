@@ -1,6 +1,6 @@
 class State:
-	onready var blocked = false
-	onready var finished = false
+	var blocked = false
+	var finished = false
 	var who
 
 	func run():
@@ -52,8 +52,8 @@ class AnimateUntilFinished extends State:
 			player.connect("animation_finished", self, "animation_finished")
 	
 	func animation_finished(_arg):
-		finished = true
 		player.disconnect("animation_finished", self, "animation_finished")
+		finished = true
 
 
 class CallFunction extends State:
@@ -71,6 +71,19 @@ class CallFunction extends State:
 		else:
 			printerr(who.name + " does not implement the method " + fc)
 			push_error(who.name + " does not implement the method " + fc)
+		finished = true
+
+
+class Emit extends State:
+	
+	var message
+	
+	func _init(_who, msg):
+		who = _who
+		message = msg
+		
+	func run():
+		who.emit_signal("message", message)
 		finished = true
 
 
@@ -92,7 +105,7 @@ class Finished extends State:
 		who = _who
 	
 	func run():
-		who.action_finished()
+		who.emit_signal("player_finished")
 		finished = true
 
 
@@ -101,30 +114,16 @@ class InteractWithObject extends State:
 	var function
 	var params
 	
-	func _init(obj, fn, _params=[]):
+	func _init(_who, obj, fn, _params=[]):
+		who = _who
 		object = obj
 		function = fn
 		params = _params
 		
 	func run():
-		# Perform action on object
-		object.callv(function, params)
-		finished = true
-
-
-class PerformActionOnObject extends State:
-	var object
-	var action
-	
-	func _init(_who, act, obj):
-		who = _who
-		object = obj
-		action = act
-		
-	func run():
 		blocked = true
 		# Perform action on object
-		object.call(action.function, who)
+		object.callv(function, params)
 		finished = true
 
 
@@ -226,4 +225,27 @@ class WalkPath extends State:
 				who.face_direction(move_vec)
 		else:
 			# There is no more path to walk
+			finished = true
+
+
+class WaitOnPlayer extends State:
+	var whom
+	var what
+	var running = false
+	
+	func _init(_who, _whom, _what):
+		who = _who
+		whom = _whom
+		what = _what
+	
+	func run():
+		if running:
+			return
+		
+		whom.connect("message", self, "received_message")
+		running = true
+	
+	func received_message(message):
+		if message == what:
+			whom.disconnect("message", self, "received_message")
 			finished = true
