@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/PACgd/scripts/InventoryGUI.gd" type="Script" id=1]
+[ext_resource path="res://addons/PACgd/scripts/Point_and_Click.gd" type="Script" id=2]
+[ext_resource path="res://addons/PACgd/scripts/CutScenes/Dialog.gd" type="Script" id=4]
+
+[sub_resource type="GDScript" id=1]
+
+[node name="PointClick" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Cursor Label" type="RichTextLabel" parent="."]
+margin_left = 467.0
+margin_top = 259.0
+margin_right = 757.0
+margin_bottom = 283.0
+text = "cursor"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" type="Panel" parent="."]
+show_behind_parent = true
+rect_min_size = Vector2( 1024, 54 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slots" type="GridContainer" parent="Inventory"]
+margin_left = 5.0
+margin_top = 3.0
+margin_right = 1019.0
+margin_bottom = 51.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/hseparation = 5
+columns = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dialog" type="Panel" parent="."]
+visible = false
+show_behind_parent = true
+margin_left = 1.0
+margin_top = 513.0
+margin_right = 1024.0
+margin_bottom = 600.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Choices" type="VBoxContainer" parent="Dialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = -7.0
+margin_bottom = -12.0
+rect_min_size = Vector2( 0, 68 )
+rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

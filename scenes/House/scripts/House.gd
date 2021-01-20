@@ -23,7 +23,7 @@ func _ready():
 
 	$PAC.init($Cole, str2obj)
 	
-	#$PAC.play_scene("res://scenes/House/cut_scenes/Intro.txt")
+	$PAC.play_scene("res://scenes/House/cut_scenes/Intro.txt")
 
 
 func transition(who, to):

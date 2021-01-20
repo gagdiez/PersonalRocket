@@ -7,14 +7,14 @@ func _ready():
 
 	description = "My wardrobe, maybe I can find something useful there"
 
-	position = self.transform.origin + Vector3(0, 0, 2)
+	interaction_position = self.transform.origin + Vector3(0, 0, 2)
 
 
 func open(who):
 	who.approach(self)
 	who.face_object(self)
 	who.animate_until_finished("raise_hand")
-	who.interact(self, "slide_door")
+	who.call_function_from(self, "slide_door")
 	who.animate_until_finished("lower_hand")
 
 

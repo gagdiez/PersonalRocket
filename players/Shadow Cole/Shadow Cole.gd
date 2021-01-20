@@ -1,4 +1,4 @@
-extends Player
+extends Character
 
 func _ready():
 	._ready()
@@ -11,11 +11,11 @@ func _ready():
 
 	talk_bubble_offset = Vector3(-.6, 9.5, 0)
 
-	position = self.transform.origin + Vector3(5, 0, 0)
+	interaction_position = self.transform.origin + Vector3(5, 0, 0)
 
 func talk_to(who):
 	who.approach(self)
 	who.emit_message("arrived")
 	
-	wait_on_player(who, "arrived")
+	wait_on_character(who, "arrived")
 	say("Hi " + who.name)

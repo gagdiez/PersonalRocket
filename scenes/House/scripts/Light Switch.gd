@@ -7,7 +7,7 @@ func use(who):
 	who.approach(self)
 	who.face_object(self)
 	who.animate_until_finished("raise_hand")
-	who.interact(self, "switch")
+	who.call_function_from(self, "switch")
 	who.animate_until_finished("lower_hand")
 
 func switch():

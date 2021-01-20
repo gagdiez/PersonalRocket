@@ -12,37 +12,37 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Action",
 "language": "GDScript",
-"path": "res://addons/Point_and_Click/scripts/Actions/Action.gd"
+"path": "res://addons/PACgd/scripts/Actions/Action.gd"
+}, {
+"base": "Interactive",
+"class": "Character",
+"language": "GDScript",
+"path": "res://addons/PACgd/scripts/Character/Character.gd"
 }, {
 "base": "Node",
 "class": "CutScene",
 "language": "GDScript",
-"path": "res://addons/Point_and_Click/scripts/CutScenes/CutScene.gd"
+"path": "res://addons/PACgd/scripts/CutScenes/CutScene.gd"
 }, {
 "base": "Interactive",
 "class": "Floor",
 "language": "GDScript",
-"path": "res://addons/Point_and_Click/scripts/Interactive/Floor.gd"
+"path": "res://addons/PACgd/scripts/Interactive/Floor.gd"
 }, {
 "base": "Spatial",
 "class": "Interactive",
 "language": "GDScript",
-"path": "res://addons/Point_and_Click/scripts/Interactive/Interactive.gd"
+"path": "res://addons/PACgd/scripts/Interactive/Interactive.gd"
 }, {
 "base": "Reference",
 "class": "Inventory",
 "language": "GDScript",
-"path": "res://addons/Point_and_Click/scripts/Player/Inventory.gd"
+"path": "res://addons/PACgd/scripts/Character/Inventory.gd"
 }, {
 "base": "Node",
 "class": "Parser",
 "language": "GDScript",
-"path": "res://addons/Point_and_Click/scripts/CutScenes/Parser.gd"
-}, {
-"base": "Interactive",
-"class": "Player",
-"language": "GDScript",
-"path": "res://addons/Point_and_Click/scripts/Player/Player.gd"
+"path": "res://addons/PACgd/scripts/CutScenes/Parser.gd"
 }, {
 "base": "Interactive",
 "class": "Transition",
@@ -51,12 +51,12 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Action": "",
+"Character": "",
 "CutScene": "",
 "Floor": "",
 "Interactive": "",
 "Inventory": "",
 "Parser": "",
-"Player": "",
 "Transition": ""
 }
 
@@ -68,11 +68,11 @@ config/icon="res://icon.png"
 
 [display]
 
-mouse_cursor/custom_image="res://addons/Point_and_Click/cursor.png"
+mouse_cursor/custom_image="res://addons/PACgd/cursor.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "MagicaVoxelImporter", "Point_and_Click" )
+enabled=PoolStringArray( "MagicaVoxelImporter" )
 
 [input]
 
