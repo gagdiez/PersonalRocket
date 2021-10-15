@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://players/Shadow Cole/Shadow Cole.gd" type="Script" id=1]
 [ext_resource path="res://players/Shadow Cole/spritesheet.png" type="Texture" id=2]
@@ -85,14 +85,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 }
 
-[sub_resource type="SpatialMaterial" id=6]
-flags_transparent = true
-flags_vertex_lighting = true
-flags_albedo_tex_force_srgb = true
-params_cull_mode = 2
-params_depth_draw_mode = 3
-
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 1.08514, 4.33591, 0.0757634 )
 
 [node name="Shadow Cole" type="KinematicBody"]
@@ -124,13 +117,13 @@ anims/walk = SubResource( 5 )
 
 [node name="Sprite" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.39771, 0.0795898 )
-material_override = SubResource( 6 )
-use_in_baked_light = true
+shaded = true
+alpha_cut = 2
 texture = ExtResource( 2 )
-vframes = 2
 hframes = 8
+vframes = 2
 frame = 8
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.41086, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 6 )
