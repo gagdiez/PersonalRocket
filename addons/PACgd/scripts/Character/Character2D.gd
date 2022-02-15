@@ -1,5 +1,5 @@
-extends Interactive
-class_name Character
+extends Interactive2D
+class_name Character2D
 
 # A player is basically a queue of actions that is constantly running
 const STATES = preload("States.gd")
@@ -16,9 +16,6 @@ var inventory = Inventory.new()
 onready var animation_player = $Animations
 onready var talk_bubble = $TalkBubble
 onready var sprite = $Sprite
-
-# 3D characters have an offset for their bubble that helps to position it in the scene
-var talk_bubble_offset = Vector3(0, 0, 0)
 
 # They have a speed, and they don't move if the destination is close
 var SPEED = 5
@@ -48,11 +45,13 @@ func _physics_process(_delta):
 		doing = false
 		emit_signal("player_finished")
 
+func get_world():
+	return get_world_2d()
 
 # Internal Functions
 func face_direction(direction):
-	var my_pos = camera.unproject_position(transform.origin)
-	var dir = camera.unproject_position(transform.origin + direction)
+	var my_pos = transform.origin
+	var dir = transform.origin + direction
 	
 	if dir.x < my_pos.x:
 		sprite.scale.x = -abs(sprite.scale.x)
@@ -115,9 +114,9 @@ func wait_on_character(who:Character, message:String):
 
 func approach(object):
 	assert(navigation != null, "You forgot to set the navigation of " + oname)
-
+	
 	if not object.interaction_position: return
-
+	
 	var end = navigation.get_closest_point(object.interaction_position)
 
 	if (end - transform.origin).length() > MINIMUM_WALKABLE_DISTANCE:
@@ -134,18 +133,18 @@ func approach(object):
 
 
 # Default answers to actions
-func receive_item(who, item):
+func receive_item(from, item):
 	# Remove item
-	who.animate_until_finished("raise_hand")
-	who.remove_from_inventory(item)
-	who.animate_until_finished("lower_hand")
-	who.emit_message("gave_item")
+	from.animate_until_finished("raise_hand")
+	from.remove_from_inventory(item)
+	from.animate_until_finished("lower_hand")
+	from.emit_message("gave_item")
 	
 	# Take item
 	self.animate_until_finished("raise_hand")
 	self.animate_until_finished("lower_hand")
-	self.wait_on_character(who, "gave_item")
-	self.add_to_inventory(item)
+	self.wait_on_character(from, "gave_item")
+	self.add_to_inventory(from)
 
 func talk_to(who):
 	who.approach(self)

@@ -10,10 +10,8 @@
 script = ExtResource( 2 )
 
 [node name="Cursor Label" type="RichTextLabel" parent="."]
-margin_left = 467.0
-margin_top = 259.0
-margin_right = 757.0
-margin_bottom = 283.0
+margin_right = 597.0
+margin_bottom = 18.0
 text = "cursor"
 scroll_active = false
 __meta__ = {
@@ -22,6 +20,8 @@ __meta__ = {
 
 [node name="Inventory" type="Panel" parent="."]
 show_behind_parent = true
+margin_right = 1078.0
+margin_bottom = 54.0
 rect_min_size = Vector2( 1024, 54 )
 script = ExtResource( 1 )
 __meta__ = {

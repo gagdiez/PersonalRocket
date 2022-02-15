@@ -27,22 +27,18 @@ func _ready():
 
 
 func transition(who, to):
+
 	# the objects from where we come are not interactive anymore
 	var to_objects = to.get_node("Interactive").get_children()
 	
 	for obj in all_interactive_objects:
-		if not obj in to_objects:
-			obj.interactive = false
-		else:
+		if obj in to_objects:
 			obj.interactive = true
+		else:
+			obj.interactive = false
 	
 	var to_camera = to.get_node("Camera")
 	to_camera.current = true
 	
 	who.camera = to_camera
 	who.rotation_degrees.y = to_camera.rotation_degrees.y
-	
-	if to_camera.rotation_degrees.y != 0:
-		who.talk_bubble_offset = Vector3(0, 9.5, -.9)
-	else:
-		who.talk_bubble_offset = Vector3(-.7, 9.5, 0)

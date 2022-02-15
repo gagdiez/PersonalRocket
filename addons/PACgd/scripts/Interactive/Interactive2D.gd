@@ -1,5 +1,5 @@
-extends Spatial
-class_name Interactive
+extends Node2D
+class_name Interactive2D
 
 var ACTIONS = preload("../Actions/Actions.gd").new()
 var DEFAULT = preload("Default.gd").new()

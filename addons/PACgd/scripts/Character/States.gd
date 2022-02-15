@@ -133,29 +133,25 @@ class RemoveFromInventory extends State:
 class Say extends State:
 	var what
 	var label
-	var timer
 	var said = false
 	
-	func _init(_who, _what, _label, _timer):
+	func _init(_who, _what, how_long):
 		who = _who
 		what = _what
-		label = _label
-		timer = _timer
 	
 	func run():
 		blocked = true
 		if said:
 			return
-		timer.stop()
-		label.text = what
-		label.visible = true
-		timer.start()
+
+		who.say_now(what)
+		var timer = who.get_tree().create_timer(1.0)
+
 		timer.connect("timeout", self, "quiet")
 		said = true
-		
+
 	func quiet():
-		timer.disconnect("timeout", self, "quiet")
-		label.visible = false
+		who.quiet()
 		finished = true
 
 

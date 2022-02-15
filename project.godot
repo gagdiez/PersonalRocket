@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/PACgd/scripts/Character/Character.gd"
 }, {
+"base": "Interactive2D",
+"class": "Character2D",
+"language": "GDScript",
+"path": "res://addons/PACgd/scripts/Character/Character2D.gd"
+}, {
 "base": "Node",
 "class": "CutScene",
 "language": "GDScript",
@@ -29,10 +34,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/PACgd/scripts/Interactive/Floor.gd"
 }, {
+"base": "Interactive2D",
+"class": "Floor2D",
+"language": "GDScript",
+"path": "res://addons/PACgd/scripts/Interactive/Floor2D.gd"
+}, {
 "base": "Spatial",
 "class": "Interactive",
 "language": "GDScript",
 "path": "res://addons/PACgd/scripts/Interactive/Interactive.gd"
+}, {
+"base": "Node2D",
+"class": "Interactive2D",
+"language": "GDScript",
+"path": "res://addons/PACgd/scripts/Interactive/Interactive2D.gd"
 }, {
 "base": "Reference",
 "class": "Inventory",
@@ -52,9 +67,12 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Action": "",
 "Character": "",
+"Character2D": "",
 "CutScene": "",
 "Floor": "",
+"Floor2D": "",
 "Interactive": "",
+"Interactive2D": "",
 "Inventory": "",
 "Parser": "",
 "Transition": ""

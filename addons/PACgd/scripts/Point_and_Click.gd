@@ -12,14 +12,10 @@ onready var gui = $Dialog/Choices
 # in mind where the mouse is, which object is under it, who is the
 # main player and the current action (for combining actions)
 var current_action:Action
-var player:Character
+var player
 var label:RichTextLabel
 var mouse_position:Vector2
 var obj_under_mouse: Object
-
-# During the game there will be objects you want the P&C to avoid. For example,
-# if you are in one room, you want the system to ignore objects in another room
-var avoid:Array = []
 
 # For cutscenes we need to be able to translate text into objects in the game
 var str2obj: Dictionary
@@ -30,14 +26,22 @@ var active:bool = true
 # For showing the label of objects under mouse
 var mouse_offset = Vector2(8, 8)
 
-# Functions
 
-func init(_player:Character, _str2obj={}):
+func init(_player, _str2obj={}):
 	# This function needs to be called by the user to set the player
 	player = _player
 	$Inventory.follow(player.inventory)
+
+	label = $"Cursor Label"
+	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
+	label.text = ""
+	
+	self.z_index = 999
+	
+	current_action = ACTIONS.none
 	
 	str2obj = _str2obj
+	
 
 func click():
 	# Function called when a left click is made
@@ -53,24 +57,45 @@ func click():
 		player.interrupt()
 		current_action.uncombine()
 
-func get_object_under_mouse(mouse_pos:Vector2, RAY_LENGTH=50):
+
+func get_object_under_mouse(mouse_pos:Vector2, RAY_LENGTH=50, avoid=[]):
 	# Function to retrieve which object is under the mouse
+
+	# Get the space
+	var space = player.get_world().direct_space_state
 	
 	# Create a ray from the camera pointing towards the mouse
-	var from = player.camera.project_ray_origin(mouse_pos)
-	var to = from + player.camera.project_ray_normal(mouse_pos) * RAY_LENGTH
-	var ray = player.get_world().direct_space_state.intersect_ray(from, to, avoid)
+	var ray: Dictionary = {}
+	
+	if space is Physics2DDirectSpaceState:
+		# Get the object with the highest z_index
+		var intersections = space.intersect_point(mouse_pos, 2, avoid, 2147483647, true, true)
 
-	# If the ray hits something then the hitted object is at ray['collider']
-	if ray and ray['collider'] is Interactive:
-		if ray['collider'].interactive:
-			avoid = []
+		for obj in intersections:
+			if ray:
+				if obj['collider'].z_index > ray['collider'].z_index:
+					ray = obj
+			else:
+				ray = obj
+	else:
+		# In 3D we need to project from the camera
+		assert(player.camera != null, "You forgot to set the camera of " + player.oname)
+
+		var from = player.camera.project_ray_origin(mouse_pos)
+		var to = from + player.camera.project_ray_normal(mouse_pos) * RAY_LENGTH
+		ray = space.intersect_ray(from, to, avoid)
+	
+	if ray:
+		var pac = ray['collider'] is Interactive
+		var pac2d = ray['collider'] is Interactive2D
+
+		if (pac or pac2d) and ray['collider'].interactive:
 			return ray['collider']
 		else:
 			avoid.append(ray['collider'])
-			return get_object_under_mouse(mouse_pos)
-	avoid = []
+			return get_object_under_mouse(mouse_pos, RAY_LENGTH, avoid)
 	return
+
 
 func play_scene(scene_file, addition={}):
 	# Function to play a cutscene
@@ -81,6 +106,7 @@ func play_scene(scene_file, addition={}):
 	
 	var cut_scene_player = CutScene.new(scene_file, new_str2obj, self)
 	cut_scene_player.play()
+
 
 func point():
 	# On every single frame we check what's under the mouse
@@ -98,6 +124,7 @@ func point():
 	else:
 		if current_action.type != Action.COMBINED:
 			current_action = ACTIONS.none
+
 
 func _process(_delta):
 	# On every frame
@@ -122,13 +149,6 @@ func _process(_delta):
 	if Input.is_action_just_released("ui_secondary_click"):
 		secondary_click()
 
-func _ready():
-	# On ready set the current action to none, and clear the label
-	label = $"Cursor Label"
-	label.set("custom_colors/default_color", Color(1, 1, 1, 1))
-	label.text = ""
-
-	current_action = ACTIONS.none
 
 func secondary_click():
 	# Function called when a right click is made
