@@ -1,13 +1,18 @@
 [remap]
 
-importer="MagicaVoxel-Importer"
+importer="MagicaVoxel.With.Extensions.To.Mesh"
 type="Mesh"
-path="res://.import/wardrobe_door.vox-9726cda0c5be04a624ad8bc4ee03da8c.mesh"
+uid="uid://bbdjn26wpovrv"
+path="res://.godot/imported/wardrobe_door.vox-9726cda0c5be04a624ad8bc4ee03da8c.mesh"
 
 [deps]
 
 source_file="res://scenes/House/room_left/wardrobe_door.vox"
-dest_files=[ "res://.import/wardrobe_door.vox-9726cda0c5be04a624ad8bc4ee03da8c.mesh" ]
+dest_files=["res://.godot/imported/wardrobe_door.vox-9726cda0c5be04a624ad8bc4ee03da8c.mesh"]
 
 [params]
 
+Scale=1.0
+GreedyMeshGenerator=true
+SnapToGround=false
+FirstKeyframeOnly=true

@@ -1,5 +1,7 @@
-extends Interactive
+extends PACInteractive
 
 func _ready():
-	oname = "Mr Roboto"
+	id = "mr_roboto"
+
+	display_name = "Mr Roboto"
 	description = "That is my best friend, Mister Roboto"

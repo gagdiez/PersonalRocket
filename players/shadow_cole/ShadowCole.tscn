@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://players/cole/Cole.tscn" id="1"]
+[ext_resource type="Script" path="res://players/shadow_cole/ShadowCole.gd" id="2"]
+[ext_resource type="Texture2D" path="res://players/shadow_cole/spritesheet.png" id="3"]
+
+[node name="Shadow Cole" node_paths=PackedStringArray("interaction_point") instance=ExtResource("1")]
+script = ExtResource("2")
+interaction_point = NodePath("InteractionPoint")
+
+[node name="Sprite" parent="."]
+texture = ExtResource("3")
+
+[node name="InteractionPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)

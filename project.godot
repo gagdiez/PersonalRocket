@@ -6,109 +6,30 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Reference",
-"class": "Action",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Actions/Action.gd"
-}, {
-"base": "Interactive",
-"class": "Character",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Character/Character.gd"
-}, {
-"base": "Interactive2D",
-"class": "Character2D",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Character/Character2D.gd"
-}, {
-"base": "Node",
-"class": "CutScene",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/CutScenes/CutScene.gd"
-}, {
-"base": "Interactive",
-"class": "Floor",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Interactive/Floor.gd"
-}, {
-"base": "Interactive2D",
-"class": "Floor2D",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Interactive/Floor2D.gd"
-}, {
-"base": "Spatial",
-"class": "Interactive",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Interactive/Interactive.gd"
-}, {
-"base": "Node2D",
-"class": "Interactive2D",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Interactive/Interactive2D.gd"
-}, {
-"base": "Reference",
-"class": "Inventory",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/Character/Inventory.gd"
-}, {
-"base": "Node",
-"class": "Parser",
-"language": "GDScript",
-"path": "res://addons/PACgd/scripts/CutScenes/Parser.gd"
-}, {
-"base": "Interactive",
-"class": "Transition",
-"language": "GDScript",
-"path": "res://scenes/House/scripts/Transition.gd"
-} ]
-_global_script_class_icons={
-"Action": "",
-"Character": "",
-"Character2D": "",
-"CutScene": "",
-"Floor": "",
-"Floor2D": "",
-"Interactive": "",
-"Interactive2D": "",
-"Inventory": "",
-"Parser": "",
-"Transition": ""
-}
+config_version=5
 
 [application]
 
 config/name="Personal Godot"
 run/main_scene="res://scenes/House/House.tscn"
+config/features=PackedStringArray("4.7")
 config/icon="res://icon.png"
+
+[autoload]
+
+PAC="*res://addons/PACgd/core/pac.gd"
 
 [display]
 
+window/size/viewport_width=1024
+window/size/viewport_height=600
 mouse_cursor/custom_image="res://addons/PACgd/cursor.png"
+mouse_cursor/custom_image_hotspot=Vector2(5, 5)
 
 [editor_plugins]
 
-enabled=PoolStringArray( "MagicaVoxelImporter" )
-
-[input]
-
-ui_main_click={
-"deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
- ]
-}
-ui_secondary_click={
-"deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
- ]
-}
-
-[physics]
-
-3d/active_soft_world=false
+enabled=PackedStringArray("res://addons/PACgd/plugin.cfg", "res://addons/MagicaVoxel_Importer_with_Extensions/plugin.cfg")
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/defaults/default_environment="res://default_env.tres"

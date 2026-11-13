@@ -1,13 +1,18 @@
 [remap]
 
-importer="MagicaVoxel-Importer"
+importer="MagicaVoxel.With.Extensions.To.Mesh"
 type="Mesh"
-path="res://.import/cup.vox-b2269987015c1a245060a28c1081a248.mesh"
+uid="uid://exy07ejwea8d"
+path="res://.godot/imported/cup.vox-b2269987015c1a245060a28c1081a248.mesh"
 
 [deps]
 
 source_file="res://scenes/House/living_vox/cup.vox"
-dest_files=[ "res://.import/cup.vox-b2269987015c1a245060a28c1081a248.mesh" ]
+dest_files=["res://.godot/imported/cup.vox-b2269987015c1a245060a28c1081a248.mesh"]
 
 [params]
 
+Scale=1.0
+GreedyMeshGenerator=true
+SnapToGround=false
+FirstKeyframeOnly=true

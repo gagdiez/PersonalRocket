@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PACAction" format=3]
+
+[ext_resource type="Script" path="res://addons/PACgd/core/action.gd" id="1_qxj7f"]
+
+[resource]
+script = ExtResource("1_qxj7f")
+label = "Go to"
+method = &"go_to"
