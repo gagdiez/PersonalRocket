@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PACAction" format=3]
+
+[ext_resource type="Script" path="res://addons/PACgd/core/action.gd" id="1_k16b2"]
+
+[resource]
+script = ExtResource("1_k16b2")
+method = &"remove_from_inventory"
+type = 2

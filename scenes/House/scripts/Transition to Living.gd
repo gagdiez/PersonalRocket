@@ -1,11 +1,11 @@
-extends Transition
+extends PACInteractive
 
 func _ready():
-	interaction_position = Vector3(-4.157, 0 , -14.09)
-	
-	level = get_node("../../../..")
-	to = get_node("../../../Living")
+	id = "living_room"
+
+	main_action = PAC.actions.go_to
+
 
 func go_to(who):
 	who.approach(self)
-	who.call_function_from(self, "transition", [who])
+	self.run(get_tree().current_scene.transition.bind(who, $"../../../Living"))

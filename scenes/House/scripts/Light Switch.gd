@@ -1,15 +1,18 @@
-extends Interactive
+extends PACInteractive
+
+# There is one in each room: their ids are set in the Inspector
 
 func _ready():
-	main_action = ACTIONS.use
+	main_action = PAC.actions.use
+
 
 func use(who):
 	who.approach(self)
-	who.face_object(self)
-	who.animate_until_finished("raise_hand")
-	who.call_function_from(self, "switch")
-	who.animate_until_finished("lower_hand")
+	who.animate_until_finished(who.anim_raise_hand)
+	self.run(switch)
+	who.animate_until_finished(who.anim_lower_hand)
+
 
 func switch():
-	$OmniLight.visible = not $OmniLight.visible
+	$OmniLight3D.visible = not $OmniLight3D.visible
 	$light_glow.visible = not $light_glow.visible

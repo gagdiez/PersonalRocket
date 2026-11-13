@@ -1,13 +1,18 @@
 [remap]
 
-importer="MagicaVoxel-Importer"
+importer="MagicaVoxel.With.Extensions.To.Mesh"
 type="Mesh"
-path="res://.import/jacket.vox-e21ad3a847a91a077aecc385a5c4f597.mesh"
+uid="uid://chj3mu8yvayqb"
+path="res://.godot/imported/jacket.vox-e21ad3a847a91a077aecc385a5c4f597.mesh"
 
 [deps]
 
 source_file="res://scenes/House/living_vox/jacket.vox"
-dest_files=[ "res://.import/jacket.vox-e21ad3a847a91a077aecc385a5c4f597.mesh" ]
+dest_files=["res://.godot/imported/jacket.vox-e21ad3a847a91a077aecc385a5c4f597.mesh"]
 
 [params]
 
+Scale=1.0
+GreedyMeshGenerator=true
+SnapToGround=false
+FirstKeyframeOnly=true

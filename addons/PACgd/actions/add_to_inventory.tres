@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PACAction" format=3]
+
+[ext_resource type="Script" path="res://addons/PACgd/core/action.gd" id="1_fxs2m"]
+
+[resource]
+script = ExtResource("1_fxs2m")
+method = &"add_to_inventory"
+type = 2
